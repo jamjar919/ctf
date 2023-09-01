@@ -1,4 +1,5 @@
 scalar TeamID
+scalar PointsID
 scalar DateTime
 
 type Team {
@@ -8,7 +9,7 @@ type Team {
 }
 
 type Points {
-    id: ID!
+    id: PointsID!
     team: TeamID!
     adjustment: Int!
     reason: String!
@@ -18,4 +19,18 @@ type Points {
 type Query {
     teams: [Team]
     team(id: TeamID!): String
+}
+
+type Mutation {
+    addTeam(teamName: String!): Boolean,
+    deleteTeam(id: TeamID!): Boolean,
+    addPoints(
+        teamId: TeamID!,
+        adjustment: Int!,
+        reason: String!,
+        timestamp: DateTime
+    ): Boolean,
+    deletePoints(
+        id: PointsID!
+    ): Boolean
 }
