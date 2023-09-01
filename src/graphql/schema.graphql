@@ -1,0 +1,21 @@
+scalar TeamID
+scalar DateTime
+
+type Team {
+    id: TeamID!
+    name: String!
+    points: [Points]
+}
+
+type Points {
+    id: ID!
+    team: TeamID!
+    adjustment: Int!
+    reason: String!
+    timestamp: DateTime!
+}
+
+type Query {
+    teams: [Team]
+    team(id: TeamID!): String
+}
