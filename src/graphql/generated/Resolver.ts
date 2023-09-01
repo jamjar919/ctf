@@ -71,6 +71,7 @@ export type QueryTeamArgs = {
 
 export type Team = {
   __typename?: 'Team';
+  color: Scalars['String'];
   id: Scalars['TeamID'];
   name: Scalars['String'];
   points?: Maybe<Array<Maybe<Points>>>;
@@ -204,6 +205,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 }>;
 
 export type TeamResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{
+  color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['TeamID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   points?: Resolver<Maybe<Array<Maybe<ResolversTypes['Points']>>>, ParentType, ContextType>;

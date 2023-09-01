@@ -8,6 +8,7 @@ const Query = gql`
         teams {
             id
             name,
+            color,
             points {
                 id,
                 adjustment,

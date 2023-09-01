@@ -1,11 +1,11 @@
 import React from "react";
 import {
-    VictoryChart, VictoryGroup, VictoryLine, VictoryScatter, VictoryTooltip,
+    VictoryChart, VictoryGroup, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryTooltip,
     VictoryVoronoiContainer
 } from "victory";
-import {Points, Team} from "../../../../graphql/generated/Resolver";
-import {colorFromString} from "../../util/ColourFromString";
+import {Team} from "../../../../graphql/generated/Resolver";
 import {getPoints} from "./GetPoints";
+import {Legend} from "./Legend";
 
 type AllTeamsGraphProps = {
     teams: Team[]
@@ -31,10 +31,25 @@ const AllTeamsGraph: React.FC<AllTeamsGraphProps> = ({ teams }) => {
         return (
             <VictoryGroup
                 key={team.id}
-                color={colorFromString(team.id)}
+                color={team.color}
                 data={data}
+                animate={{ duration: 2000 }}
             >
-                <VictoryLine />
+                <VictoryLine
+                    interpolation="linear"
+                    animate={{
+                        animationWhitelist: ["style", "data", "size"],
+                        onExit: {
+                            duration: 500,
+                            before: () => ({ opacity: 0.3, _y: 0 })
+                        },
+                        onEnter: {
+                            duration: 500,
+                            before: () => ({ opacity: 0.3, _y: 0 }),
+                            after: (datum) => ({ opacity: 1, _y: datum._y })
+                        }
+                    }}
+                />
             </VictoryGroup>
         )
     })
@@ -44,23 +59,26 @@ const AllTeamsGraph: React.FC<AllTeamsGraphProps> = ({ teams }) => {
     console.log(team);
 
     return (
-        <VictoryChart
-            scale={{x: 'time'}}
-            domainPadding={10}
-            height={200}
-            containerComponent={
-                <VictoryVoronoiContainer
-                    labels={({datum}) => getLabelText(datum)}
-                    labelComponent={
-                        <VictoryTooltip
-                            style={{fontSize: 8}}
-                        />
-                    }
-                />
-            }
-        >
-            {groups}
-        </VictoryChart>
+        <>
+            <VictoryChart
+                scale={{x: 'time'}}
+                domainPadding={10}
+                height={200}
+                containerComponent={
+                    <VictoryVoronoiContainer
+                        labels={({datum}) => getLabelText(datum)}
+                        labelComponent={
+                            <VictoryTooltip
+                                style={{fontSize: 8}}
+                            />
+                        }
+                    />
+                }
+            >
+                {groups}
+            </VictoryChart>
+            <Legend teams={teams} />
+        </>
     )
 }
 
