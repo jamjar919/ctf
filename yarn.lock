@@ -1557,6 +1557,13 @@
   resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-9.0.3.tgz#6cdd939b4316b4f81625de9f06028d848c4a1533"
   integrity sha512-taHQQH/3ZyI3zP8M/puluDEIEvtQHVYcC6y3N8ijFtAd28+Ey/G4sg1u2gB01S8MwybLOKAp9/yCMu/uR5l3Ug==
 
+"@types/victory@^35.0.0":
+  version "35.0.0"
+  resolved "https://registry.yarnpkg.com/@types/victory/-/victory-35.0.0.tgz#57d81e24314fcccf9e63807f6933e8a57768741b"
+  integrity sha512-17Ed/5fSNmIj2APAdM95R4IkJObrOGrHs+YTOwxW28hJvG5XH0uVGxdjLjA5yyoCTPEGQ9i0KKVdQMRjtY2EiQ==
+  dependencies:
+    victory "*"
+
 "@types/webidl-conversions@*":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@types/webidl-conversions/-/webidl-conversions-7.0.0.tgz#2b8e60e33906459219aa587e9d1a612ae994cfe7"
@@ -6084,7 +6091,7 @@ victory-zoom-container@^36.6.11:
     prop-types "^15.8.1"
     victory-core "^36.6.11"
 
-victory@^36.6.11:
+victory@*, victory@^36.6.11:
   version "36.6.11"
   resolved "https://registry.yarnpkg.com/victory/-/victory-36.6.11.tgz#2bd34160fac8b98cda1a36a894172685cc70db0d"
   integrity sha512-pXtD0gEBw1wohctaeDDWAUwX+qR9OyKyUeI0bi/rmSPNf84TinIf1bWuAuUuEPb2v90ASLVkuz0nVAP//7FOdQ==

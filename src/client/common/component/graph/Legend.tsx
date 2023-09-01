@@ -1,22 +1,14 @@
 import {VictoryLegend} from "victory";
 import React from "react";
 import {Team} from "../../../../graphql/generated/Resolver";
+import {getWinningTeam} from "../../util/GetWinningTeam";
 
 type LegendProps = {
     teams: Team[]
 }
 
 const Legend: React.FC<LegendProps> = ({ teams}) => {
-    const winningTeam = teams.reduce((team, currentBest) => {
-        const teamPoints: number = team?.points.reduce((a,b) => a + b.adjustment, 0) ?? 0;
-        const currentBestPoints: number = currentBest?.points.reduce((a,b) => a + b.adjustment, 0) ?? 0;
-
-        if (teamPoints > currentBestPoints) {
-            return team;
-        }
-
-        return currentBest;
-    }, null)
+    const winningTeam = getWinningTeam(teams);
 
     const data = teams.map((team) => {
         return  {

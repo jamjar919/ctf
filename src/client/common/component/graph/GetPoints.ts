@@ -1,5 +1,8 @@
 import {Points} from "../../../../graphql/generated/Resolver";
 
+/**
+ * Retrieve a set of points representing a team's score
+ */
 const getPoints = (
     points: Points[]
 ) => {

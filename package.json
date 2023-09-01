@@ -44,6 +44,7 @@
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/uuid": "^9.0.3",
+    "@types/victory": "^35.0.0",
     "babel-loader": "^9.1.2",
     "dotenv": "^16.0.3",
     "nodemon-webpack-plugin": "^4.8.1",
