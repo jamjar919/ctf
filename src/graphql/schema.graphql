@@ -23,7 +23,7 @@ type Points {
 }
 
 type Query {
-    teams: [Team!]
+    teams: [Team!]!
     team(id: TeamID!): Team
 }
 

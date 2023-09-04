@@ -61,7 +61,7 @@ export type Points = {
 export type Query = {
   __typename?: 'Query';
   team?: Maybe<Team>;
-  teams?: Maybe<Array<Team>>;
+  teams: Array<Team>;
 };
 
 
@@ -209,7 +209,7 @@ export interface PointsIdScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<QueryTeamArgs, 'id'>>;
-  teams?: Resolver<Maybe<Array<ResolversTypes['Team']>>, ParentType, ContextType>;
+  teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
 }>;
 
 export type ScoreResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Score'] = ResolversParentTypes['Score']> = ResolversObject<{

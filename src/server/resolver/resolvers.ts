@@ -1,10 +1,11 @@
-import { v1 } from "uuid";
+import {v1} from "uuid";
 import {Points, Resolvers, Score, Team} from "../../graphql/generated/Resolver";
 import {pointsCollection, teamCollection} from "../database/mongoClient";
 import {mapDatabaseTeamToGraph} from "./converter/mapDatabaseTeamToGraph";
 import {mapDatabasePointsToGraph} from "./converter/mapDatabasePointsToGraph";
 import {MongoTeam} from "../database/type/MongoTeam";
 import {MongoPoints} from "../database/type/MongoPoints";
+import {AuthenticationLevel} from "../../graphql/Context";
 
 export const resolvers: Resolvers = {
     Query: {
@@ -38,7 +39,11 @@ export const resolvers: Resolvers = {
         }
     },
     Mutation: {
-        addTeam: (_, { teamName }): Promise<boolean> => {
+        addTeam: (_, { teamName }, { authenticationLevel}): Promise<boolean> => {
+            if (authenticationLevel !== AuthenticationLevel.ADMIN) {
+                throw new Error("Not authenticated");
+            }
+
             const document: MongoTeam = {
                 _id: v1(),
                 name: teamName
@@ -49,13 +54,21 @@ export const resolvers: Resolvers = {
                     return !!result.insertedId;
                 })
         },
-        deleteTeam: (_, { id }): Promise<boolean> => {
+        deleteTeam: (_, { id }, { authenticationLevel}): Promise<boolean> => {
+            if (authenticationLevel !== AuthenticationLevel.ADMIN) {
+                throw new Error("Not authenticated");
+            }
+
             return teamCollection.deleteOne({ _id: id })
                 .then((result) => {
                     return result.deletedCount > 0;
                 });
         },
-        addPoints: (_, { teamId, adjustment, reason, timestamp }): Promise<boolean> => {
+        addPoints: (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<boolean> => {
+            if (authenticationLevel !== AuthenticationLevel.ADMIN) {
+                throw new Error("Not authenticated");
+            }
+
             const document: MongoPoints = {
                 _id: v1(),
                 team: teamId,
@@ -69,7 +82,11 @@ export const resolvers: Resolvers = {
                     return !!result.insertedId;
                 })
         },
-        deletePoints: (_, { id }): Promise<boolean> => {
+        deletePoints: (_, { id }, { authenticationLevel}): Promise<boolean> => {
+            if (authenticationLevel !== AuthenticationLevel.ADMIN) {
+                throw new Error("Not authenticated");
+            }
+
             return pointsCollection.deleteOne({ _id: id })
                 .then((result) => {
                     return result.deletedCount > 0;
