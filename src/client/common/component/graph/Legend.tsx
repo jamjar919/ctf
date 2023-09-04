@@ -24,6 +24,9 @@ const Legend: React.FC<LegendProps> = ({ teams}) => {
         <VictoryLegend
             orientation={"horizontal"}
             data={data}
+            style={{
+                labels: { fontFamily: "Fira Code" }
+            }}
         />
     )
 }

@@ -19,7 +19,7 @@ type Points {
 
 type Query {
     teams: [Team]
-    team(id: TeamID!): String
+    team(id: TeamID!): Team
 }
 
 type Mutation {

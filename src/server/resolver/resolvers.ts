@@ -8,10 +8,19 @@ import {MongoPoints} from "../database/type/MongoPoints";
 
 export const resolvers: Resolvers = {
     Query: {
-        teams: async () => {
+        teams: async (): Promise<Team[]> => {
             return (await teamCollection.find({}).toArray())
                 .map(mapDatabaseTeamToGraph);
         },
+        team: async (_, { id }): Promise<Team | null>  => {
+            const maybeTeam: MongoTeam | null = await teamCollection.findOne({ _id: id });
+
+            if (maybeTeam == null) {
+                return null;
+            }
+
+            return mapDatabaseTeamToGraph(maybeTeam);
+        }
     },
     Team: {
         points: async (parent: Team): Promise<Points[]> => {

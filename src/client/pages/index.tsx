@@ -1,6 +1,6 @@
 import React from "react";
 import {gql, useQuery} from "@apollo/client";
-import {AllTeamsGraph} from "../common/component/graph/AllTeamsGraph";
+import {TeamsGraph} from "../common/component/graph/TeamsGraph";
 import {Team} from "../../graphql/generated/Resolver";
 
 const Query = gql`
@@ -27,7 +27,7 @@ const Index: React.FC<IndexProps> = () => {
 
     return (
         <div>
-            {data?.teams && <AllTeamsGraph teams={data.teams} />}
+            {data?.teams && <TeamsGraph teams={data.teams} title={"://Leaderboard"} showLegend={true}  />}
         </div>
     )
 }
