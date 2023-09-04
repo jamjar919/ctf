@@ -21,11 +21,11 @@ const Legend: React.FC<LegendProps> = ({ teams}) => {
                 className={styles.teamRow}
                 onClick={() => toggleTeam(team.id)}
             >
-                <td className={styles.teamIcon}>{winningTeam.id === team.id ? "👑" : "⬤"}</td>
+                <td className={styles.teamIcon}>{winningTeam?.id === team.id ? "👑" : "⬤"}</td>
                 <td className={styles.teamColor}>
                     <div className={styles.colorCube} style={{ backgroundColor: team.color }} />
                 </td>
-                <td className={styles.total}>{team.score.total}</td>
+                <td className={styles.total}>{team.score?.total ?? 0}</td>
                 <td className={styles.name}>{team.name}</td>
             </tr>
         );

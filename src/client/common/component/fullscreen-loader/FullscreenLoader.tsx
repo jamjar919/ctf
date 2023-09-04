@@ -1,8 +1,10 @@
-import styles from "./FullscreenLoader.module.scss";
+import React from "react";
 import {AsciiLoader} from "../ascii-loader/AsciiLoader";
 import {AsciiLoaderTilesetType} from "../ascii-loader/AsciiLoaderTileset";
 
-const FullscreenLoader = () => {
+import styles from "./FullscreenLoader.module.scss";
+
+const FullscreenLoader: React.FC = () => {
     return (
         <div className={styles.loader}>
             <AsciiLoader type={AsciiLoaderTilesetType.Sonar} />

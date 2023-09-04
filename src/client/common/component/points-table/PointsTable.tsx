@@ -8,7 +8,6 @@ type PointsTableProps = {
     team: Team
 }
 
-
 const getIndicator = (adjustment: number): string => {
     if (adjustment === 0) {
         return "o";
@@ -19,7 +18,7 @@ const getIndicator = (adjustment: number): string => {
 
 const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
 
-    if (!team?.score.points || team?.score.points.length === 0) {
+    if (!team?.score?.points || team?.score?.points.length === 0) {
         return (
             <div className={styles.noPoints}>
                 No points for this team yet
@@ -28,6 +27,10 @@ const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
     }
 
     const rows = team.score.points.map((points) => {
+        if (!points) {
+            return null;
+        }
+
         return (
             <tr key={points.id}>
                 <td className={styles.indicator}>{getIndicator(points.adjustment)}</td>

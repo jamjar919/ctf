@@ -1,14 +1,9 @@
 import React from "react";
 import {
-    LineSegment,
-    VictoryAxis,
-    VictoryChart, VictoryGroup, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryTheme, VictoryTooltip,
-    VictoryVoronoiContainer
+    VictoryGroup, VictoryLine, VictoryScatter,
 } from "victory";
 import {Team} from "../../../../../graphql/generated/Resolver";
 import {getPoints} from "../util/GetPoints";
-import {getLabelText} from "../util/GetLabelText";
-import {getAxisText} from "../util/GetAxisText";
 
 const fontFamily = "Fira Code"
 
@@ -22,8 +17,8 @@ type TeamsGraphProps = {
  */
 const MiniTeamGraph: React.FC<TeamsGraphProps> = ({ team }) => {
 
-    if (!team?.score.points) {
-        return null
+    if (!team?.score?.points) {
+        return null;
     }
 
     const data = getPoints(team.score.points)

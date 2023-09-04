@@ -5,6 +5,7 @@ const SRC_DIR = "./src/";
 
 const include = [
     path.resolve(__dirname, SRC_DIR + 'server'),
+    path.resolve(__dirname, SRC_DIR + 'graphql'),
 ];
 
 const exclude = [

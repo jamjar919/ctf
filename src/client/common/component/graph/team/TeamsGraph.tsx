@@ -2,7 +2,7 @@ import React from "react";
 import {
     LineSegment,
     VictoryAxis,
-    VictoryChart, VictoryGroup, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryTheme, VictoryTooltip,
+    VictoryChart, VictoryGroup, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryTooltip,
     VictoryVoronoiContainer
 } from "victory";
 import {Team} from "../../../../../graphql/generated/Resolver";

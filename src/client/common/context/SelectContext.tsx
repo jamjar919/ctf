@@ -8,13 +8,7 @@ type SelectContext = {
     isTeamSelected: (teamId: string) => boolean,
 };
 
-const Context = React.createContext<SelectContext>({
-    selectedTeamIds: [],
-    selectTeam: null,
-    deselectTeam: null,
-    toggleTeam: null,
-    isTeamSelected: () => false
-});
+const Context = React.createContext<SelectContext>({} as any);
 
 type SelectContextProps = React.PropsWithChildren<{}>
 

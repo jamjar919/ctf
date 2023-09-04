@@ -25,15 +25,15 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
     const content = loading ? <FullscreenLoader /> : (
         <div className={styles.content}>
             <div className={styles.graph}>
-                <MiniTeamGraph team={data.team} />
+                <MiniTeamGraph team={data!.team} />
             </div>
-            <PointsTable team={data.team} />
+            <PointsTable team={data!.team} />
         </div>
     );
 
     return (
         <Modal
-            title={data?.team.name ?? <AsciiLoader type={AsciiLoaderTilesetType.Sonar} />}
+            title={data?.team?.name ?? <AsciiLoader type={AsciiLoaderTilesetType.Sonar} />}
             height={500}
             initialPosition={getSensibleInitialPosition()}
             closable

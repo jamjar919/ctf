@@ -12,8 +12,7 @@ type HotCornerProps = React.PropsWithChildren<{
 const HotCorner: React.FC<HotCornerProps> = ({
     children,
     onClick,
-    size,
-    position
+    size
 }) => {
     return (
         <div className={classNames(styles.container, styles.topLeft)}>

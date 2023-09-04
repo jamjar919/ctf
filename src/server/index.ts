@@ -1,17 +1,18 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import {ApolloServer} from "@apollo/server";
-import {ExpressContextFunctionArgument, expressMiddleware} from '@apollo/server/express4';
+import {expressMiddleware} from '@apollo/server/express4';
 import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
 import bodyParser from "body-parser";
-import cors, { CorsRequest } from 'cors';
+import cors, {CorsRequest} from 'cors';
 import http from "http";
-import { readFileSync } from 'fs';
+import {readFileSync} from 'fs';
 
 import {setupLogs} from "./util/setupLogs";
-import {Context} from "../graphql/Context";
+import {AuthenticationLevel, Context} from "../graphql/Context";
 import {resolvers} from "./resolver/resolvers";
 import {pingDatabase} from "./database/health/pingDatabase";
+import {getCookies} from "./util/getCookies";
 
 dotenv.config();
 setupLogs();
@@ -19,6 +20,8 @@ setupLogs();
 const app = express();
 const httpServer = http.createServer(app);
 const port = process.env.PORT || 16000;
+
+const COOKIE_NAME: string = "doritos-and-fritos"
 
 /**
  * GRAPHQL
@@ -39,11 +42,17 @@ app.use(
     cors<CorsRequest>(),
     bodyParser.json(),
     expressMiddleware(apolloServer, {
-        context: async (integrationContext: ExpressContextFunctionArgument) => {
-            const { req } = integrationContext;
+        context: async ({ req }) => {
+            const cookies = getCookies(req);
+
+            if (cookies[COOKIE_NAME] === process.env.SECRET) {
+                return {
+                    authenticationLevel: AuthenticationLevel.ADMIN
+                }
+            }
 
             return {
-                token: req.headers.token
+                authenticationLevel: AuthenticationLevel.BASIC
             }
         },
     }),

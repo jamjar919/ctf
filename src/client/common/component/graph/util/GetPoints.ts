@@ -1,15 +1,22 @@
 import {Points} from "../../../../../graphql/generated/Resolver";
 
+type Datum = {
+    x: Date,
+    y: number,
+    reason: string,
+    adjustment: number | null
+}
+
 /**
  * Retrieve a set of points representing a team's score
  */
 const getPoints = (
     points: Points[]
-) => {
+): Datum[] => {
     const startTime = new Date();
     startTime.setUTCHours(0, 0, 0)
 
-    const startingPoint = {
+    const startingPoint: Datum = {
         x: startTime,
         y: 0,
         reason: "Start!",
@@ -17,7 +24,7 @@ const getPoints = (
     }
 
     let total = 0;
-    const data = points.map((point: Points) => {
+    const data: Datum[] = points.map((point: Points) => {
         total += point.adjustment;
 
         return {
@@ -28,7 +35,7 @@ const getPoints = (
         }
     })
 
-    const endingPoint = {
+    const endingPoint: Datum = {
         x: new Date(),
         y: total,
         reason: "Current total",

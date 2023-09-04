@@ -9,7 +9,7 @@ type AdminContext = {
     enableAdminTools: boolean
 };
 
-const Context = React.createContext<AdminContext>(null);
+const Context = React.createContext<AdminContext>({} as any);
 
 type AdminContextProps = React.PropsWithChildren<{}>
 
@@ -21,7 +21,7 @@ const AdminContextProvider: React.FC<AdminContextProps> = (props) => {
     const toggleAdminModal = () => setIsAdminModalOpen(!isAdminModalOpen);
 
     // Secret
-    const [secret, setSecret] = useState(getAdminCookie())
+    const [secret, setSecret] = useState(getAdminCookie() ?? "")
     const updateSecret = (value: string) => {
         setAdminCookie(value);
         setSecret(value);

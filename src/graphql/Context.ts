@@ -1,5 +1,10 @@
-interface Context {
-    token?: string;
+enum AuthenticationLevel {
+    BASIC,
+    ADMIN
 }
 
-export { Context }
+interface Context {
+    authenticationLevel: AuthenticationLevel;
+}
+
+export { Context, AuthenticationLevel }

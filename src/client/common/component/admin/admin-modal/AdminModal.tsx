@@ -3,7 +3,7 @@ import {Modal} from "../../modal/Modal";
 import {getSensibleInitialPosition} from "../../modal/util/GetSensibleInitialPosition";
 import {useAdminContext} from "../../../context/AdminContext";
 
-const AdminModal: React.FC = (props) => {
+const AdminModal: React.FC = () => {
 
     const { secret, updateSecret, toggleAdminModal } = useAdminContext();
 
