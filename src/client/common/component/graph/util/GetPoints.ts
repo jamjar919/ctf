@@ -4,7 +4,7 @@ type Datum = {
     x: Date,
     y: number,
     reason: string,
-    adjustment: number | null
+    adjustment: number | null,
 }
 
 /**

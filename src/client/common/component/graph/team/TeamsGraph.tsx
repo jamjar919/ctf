@@ -9,6 +9,9 @@ import {Team} from "../../../../../graphql/generated/Resolver";
 import {getPoints} from "../util/GetPoints";
 import {getLabelText} from "../util/GetLabelText";
 import {getAxisText} from "../util/GetAxisText";
+import {useSelectContext} from "../../../context/SelectContext";
+import {EventPropTypeInterface} from "victory-core";
+import {VictoryLineTTargetType} from "victory-line/lib/victory-line";
 
 const fontFamily = "Fira Code"
 
@@ -24,12 +27,25 @@ type TeamsGraphProps = {
  */
 const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
 
+    const { toggleTeam } = useSelectContext();
+
     const groups = teams.map((team) => {
         if (!team.score?.points) {
             return null
         }
 
         const data = getPoints(team.score.points)
+
+        const events: EventPropTypeInterface<VictoryLineTTargetType, number | string>[] = [
+            {
+                target: 'data',
+                eventHandlers: {
+                    onClick: () => {
+                        toggleTeam(team.id);
+                    },
+                },
+            },
+        ];
 
         return (
             <VictoryGroup
@@ -58,8 +74,22 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
                             after: (datum) => ({ opacity: 1, _y: datum._y })
                         }
                     }}
+                    events={events}
+                    style={{
+                        data: {
+                            cursor: 'hand',
+                        },
+                    }}
                 />
-                <VictoryScatter name="scatter"/>
+                <VictoryScatter
+                    name="scatter"
+                    events={events}
+                    style={{
+                        data: {
+                            cursor: 'hand',
+                        },
+                    }}
+                />
             </VictoryGroup>
         )
     })
@@ -105,7 +135,7 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
                 <VictoryAxis
                     crossAxis
                     gridComponent={<LineSegment style={{ backgroundColor: "black" }} />}
-                    tickCount={10}
+                    tickCount={20}
                     tickFormat={(t: Date) => getAxisText(t)}
                     tickLabelComponent={<VictoryLabel angle={45} />}
                     style={{

@@ -3,6 +3,9 @@ import {Modal} from "../../modal/Modal";
 import {getSensibleInitialPosition} from "../../modal/util/GetSensibleInitialPosition";
 import {useAdminContext} from "../../../context/AdminContext";
 
+import styles from "./AdminModal.module.scss";
+import {AdminAddRemoveTeams} from "../admin-team-add-remove/AdminAddRemoveTeams";
+
 const AdminModal: React.FC = () => {
 
     const { secret, updateSecret, toggleAdminModal } = useAdminContext();
@@ -15,11 +18,15 @@ const AdminModal: React.FC = () => {
             closable
             onClose={() => toggleAdminModal()}
         >
-            super secret password:
-            <input
-                value={secret}
-                onChange={(e) => updateSecret(e.target.value)}
-            />
+            <div className={styles.passwordContainer}>
+                super secret password:
+                <input
+                    type="password"
+                    value={secret}
+                    onChange={(e) => updateSecret(e.target.value)}
+                />
+            </div>
+            <AdminAddRemoveTeams />
         </Modal>
     )
 }

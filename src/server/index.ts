@@ -12,7 +12,6 @@ import {setupLogs} from "./util/setupLogs";
 import {AuthenticationLevel, Context} from "../graphql/Context";
 import {resolvers} from "./resolver/resolvers";
 import {pingDatabase} from "./database/health/pingDatabase";
-import {getCookies} from "./util/getCookies";
 
 dotenv.config();
 setupLogs();
@@ -20,8 +19,6 @@ setupLogs();
 const app = express();
 const httpServer = http.createServer(app);
 const port = process.env.PORT || 16000;
-
-const COOKIE_NAME: string = "doritos-and-fritos"
 
 /**
  * GRAPHQL
@@ -43,9 +40,7 @@ app.use(
     bodyParser.json(),
     expressMiddleware(apolloServer, {
         context: async ({ req }) => {
-            const cookies = getCookies(req);
-
-            if (cookies[COOKIE_NAME] === process.env.SECRET) {
+            if (req.headers.token === process.env.SECRET) {
                 return {
                     authenticationLevel: AuthenticationLevel.ADMIN
                 }
