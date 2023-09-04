@@ -14,7 +14,7 @@ const Legend: React.FC<LegendProps> = ({ teams}) => {
 
     const rows = teams.map((team) => {
         return (
-            <tr>
+            <tr key={team.id}>
                 <td>{winningTeam.id === team.id ? "star" : "circle"}</td>
                 <td>{team.name}</td>
                 <td>

@@ -5,10 +5,10 @@ import {
     VictoryChart, VictoryGroup, VictoryLabel, VictoryLegend, VictoryLine, VictoryScatter, VictoryTheme, VictoryTooltip,
     VictoryVoronoiContainer
 } from "victory";
-import {Team} from "../../../../graphql/generated/Resolver";
-import {getPoints} from "./GetPoints";
-import {getLabelText} from "./GetLabelText";
-import {getAxisText} from "./GetAxisText";
+import {Team} from "../../../../../graphql/generated/Resolver";
+import {getPoints} from "../util/GetPoints";
+import {getLabelText} from "../util/GetLabelText";
+import {getAxisText} from "../util/GetAxisText";
 
 const fontFamily = "Fira Code"
 

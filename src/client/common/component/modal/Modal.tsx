@@ -4,9 +4,9 @@ import styles from './Modal.module.scss';
 
 type ModalProps = {
     children?: React.ReactNode,
-    title?: string;
+    title?: React.ReactNode;
     initialPosition?: [number, number],
-    width: number;
+    width?: number;
     height: number;
     order?: number;
     closable?: boolean;
@@ -84,7 +84,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                 className={styles.modalContent}
                 aria-hidden={!expanded}
                 style={{
-                    width: `${width}px`,
+                    maxWidth: width ? `${width}px` : "auto",
                     height: expanded ? `${height}px` : 0
                 }}
             >
@@ -94,4 +94,5 @@ const Modal: React.FC<ModalProps> = (props) => {
     );
 }
 
-export { Modal, ModalProps };
+export { Modal };
+export type { ModalProps };

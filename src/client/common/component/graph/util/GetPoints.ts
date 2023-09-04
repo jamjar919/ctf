@@ -1,4 +1,4 @@
-import {Points} from "../../../../graphql/generated/Resolver";
+import {Points} from "../../../../../graphql/generated/Resolver";
 
 /**
  * Retrieve a set of points representing a team's score

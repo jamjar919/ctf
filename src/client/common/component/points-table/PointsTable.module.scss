@@ -1,0 +1,34 @@
+.table {
+  width: 100%;
+
+  thead {
+    font-weight: bold;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+}
+
+.indicator {
+  flex: 0 0 10px;
+}
+
+.timestamp {
+  flex: 0 1 75px;
+}
+
+.adjustment {
+  flex: 0 1 75px;
+}
+
+.reason {
+  flex: 1 1;
+}
+
+.noPoints {
+  padding: 10px;
+  text-align: center;
+}

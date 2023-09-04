@@ -5,7 +5,7 @@ import {SelectedTeamModal} from "../selected-team-modal/SelectedTeamModal";
 const ModalManager: React.FC = () => {
     const {selectedTeamIds} = useSelectContext();
 
-    const selectedTeamModals = selectedTeamIds.map((id: String) => <SelectedTeamModal id={id} key={id} />)
+    const selectedTeamModals = selectedTeamIds.map((id: string) => <SelectedTeamModal id={id} key={id} />)
 
     return (
         <>

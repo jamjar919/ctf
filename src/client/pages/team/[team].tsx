@@ -1,24 +1,7 @@
 import React from "react";
-import {gql, useQuery} from "@apollo/client";
-import {TeamsGraph} from "../../common/component/graph/TeamsGraph";
-import {Team} from "../../../graphql/generated/Resolver";
+import {TeamsGraph} from "../../common/component/graph/team/TeamsGraph";
 import {useRouter} from "next/router";
-
-const Query = gql`
-    query Query($teamId: TeamID!) {
-        team(id: $teamId) {
-            id
-            name,
-            color,
-            points {
-                id,
-                adjustment,
-                timestamp,
-                reason
-            }
-        }
-    }
-`
+import {useTeam} from "../../common/query/UseTeam";
 
 const Team: React.FC = () => {
     const {
@@ -27,15 +10,11 @@ const Team: React.FC = () => {
         }
     } = useRouter();
 
-    const { data, loading, error } = useQuery<{ team: Team } | undefined>(Query, {
-        variables: {
-            teamId: team
-        }
-    });
+    const { data, loading, error } = useTeam(team)
 
     return (
         <div>
-            {data?.team && <TeamsGraph teams={[data.team]} title={`://${data.team.name}`} showLegend={false} />}
+            {data?.team && <TeamsGraph teams={[data.team]} title={`://${data.team.name}`} />}
         </div>
     )
 }
