@@ -1,0 +1,25 @@
+.container {
+  position: absolute;
+
+  &.topLeft {
+    top: 0;
+    left: 0;
+  }
+}
+
+.content {
+  padding: 10px;
+  cursor: pointer;
+
+  transform: translate(
+    -100%,
+    -100%
+  );
+  will-change: transform;
+  transition: transform 1s;
+  transition-timing-function: ease-in-out;
+}
+
+.hoverArea:hover .content {
+  transform: translate(0, 0);
+}

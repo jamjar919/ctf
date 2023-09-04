@@ -9,7 +9,7 @@ type SelectContext = {
 };
 
 const Context = React.createContext<SelectContext>({
-    selectedTeamIds: new Set(),
+    selectedTeamIds: [],
     selectTeam: null,
     deselectTeam: null,
     toggleTeam: null,
