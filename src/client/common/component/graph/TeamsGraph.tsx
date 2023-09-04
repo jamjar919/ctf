@@ -7,29 +7,25 @@ import {
 } from "victory";
 import {Team} from "../../../../graphql/generated/Resolver";
 import {getPoints} from "./GetPoints";
-import {Legend} from "./Legend";
+import {getLabelText} from "./GetLabelText";
+import {getAxisText} from "./GetAxisText";
 
 const fontFamily = "Fira Code"
 
 type TeamsGraphProps = {
+    /** Chart title */
     title: string,
-    teams: Team[],
-    showLegend: boolean
+    /** Team information with points to display */
+    teams: Team[]
 }
 
-const getLabelText = (datum: any): string => {
-    if (datum.adjustment) {
-        return `[${getAxisText(datum.x)}] ${datum.reason}: ${datum.adjustment}`
-    }
-
-    return `[${getAxisText(datum.x)}] ${datum.reason}`;
-}
-
-const getAxisText = (date: Date): string => {
-    return `${new Date(date).toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" })}`
-}
-
-const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title, showLegend }) => {
+/**
+ * Represent
+ * @param teams
+ * @param title
+ * @constructor
+ */
+const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
 
     const groups = teams.map((team) => {
         if (!team.points) {
@@ -89,6 +85,7 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title, showLegend }) => 
                         labels={({datum}) => getLabelText(datum)}
                         labelComponent={
                             <VictoryTooltip
+                                constrainToVisibleArea
                                 style={{
                                     fontSize: 8,
                                     fontFamily
@@ -132,7 +129,6 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title, showLegend }) => 
                     }}
                 />
             </VictoryChart>
-            {showLegend && <Legend teams={teams} />}
         </div>
     )
 }
