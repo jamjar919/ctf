@@ -22,11 +22,11 @@ type TeamsGraphProps = {
  */
 const MiniTeamGraph: React.FC<TeamsGraphProps> = ({ team }) => {
 
-    if (!team.points) {
+    if (!team?.score.points) {
         return null
     }
 
-    const data = getPoints(team.points)
+    const data = getPoints(team.score.points)
 
     return (
         <VictoryGroup

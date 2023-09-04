@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import {Points, Resolvers, Team} from "../../graphql/generated/Resolver";
+import {Points, Resolvers, Score, Team} from "../../graphql/generated/Resolver";
 import {pointsCollection, teamCollection} from "../database/mongoClient";
 import {mapDatabaseTeamToGraph} from "./converter/mapDatabaseTeamToGraph";
 import {mapDatabasePointsToGraph} from "./converter/mapDatabasePointsToGraph";
@@ -23,12 +23,19 @@ export const resolvers: Resolvers = {
         }
     },
     Team: {
-        points: async (parent: Team): Promise<Points[]> => {
+        score: async (parent: Team): Promise<Score> => {
             const teamId = parent.id;
 
-            return (await pointsCollection.find({ team: teamId }).toArray())
+            const points: Points[] = (await pointsCollection.find({ team: teamId }).toArray())
                 .map(mapDatabasePointsToGraph);
-        },
+
+            const total = points.reduce((a, b) => a + b.adjustment, 0);
+
+            return {
+                points,
+                total
+            }
+        }
     },
     Mutation: {
         addTeam: (_, { teamName }): Promise<boolean> => {

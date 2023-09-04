@@ -30,9 +30,9 @@ $background: black;
 }
 
 .modalContent {
-  height: 0;
-  will-change: height;
-  transition: height ease-in-out .25s;
+  max-height: 0;
+  will-change: max-height;
+  transition: max-height ease-in-out .25s;
   overflow: hidden;
 }
 

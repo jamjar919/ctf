@@ -1,0 +1,50 @@
+$size: 60px;
+
+.table {
+  font-size: 42px;
+  padding: 20px;
+  width: 100%;
+
+  thead {
+    font-weight: bold;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    cursor: pointer;
+    height: $size;
+    margin: auto 0;
+  }
+}
+
+.teamIcon {
+  flex: 0 0 100px;
+  text-align: center;
+}
+
+.teamColor {
+  flex: 0 0 100px;
+}
+
+.colorCube {
+  height: $size;
+  width: $size;
+  z-index: -1;
+  position: absolute;
+  will-change: transform;
+  transition: transform .5s;
+}
+
+.teamRow:hover .colorCube {
+  transform: scaleX(100);
+}
+
+.total {
+  flex: 0 1 200px;
+}
+
+.name {
+  flex: 1 1;
+}

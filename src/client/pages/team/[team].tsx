@@ -10,7 +10,7 @@ const Team: React.FC = () => {
         }
     } = useRouter();
 
-    const { data, loading, error } = useTeam(team)
+    const { data, loading, error } = useTeam(String(team))
 
     return (
         <div>

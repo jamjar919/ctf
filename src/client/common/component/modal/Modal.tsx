@@ -85,7 +85,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                 aria-hidden={!expanded}
                 style={{
                     maxWidth: width ? `${width}px` : "auto",
-                    height: expanded ? `${height}px` : 0
+                    maxHeight: expanded ? `${height}px` : 0
                 }}
             >
                 {children}

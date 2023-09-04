@@ -6,7 +6,12 @@ type Team {
     id: TeamID!
     name: String!
     color: String!
-    points: [Points]
+    score: Score
+}
+
+type Score {
+    points: [Points]!
+    total: Int!
 }
 
 type Points {

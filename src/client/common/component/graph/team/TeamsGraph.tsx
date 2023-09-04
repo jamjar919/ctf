@@ -25,11 +25,11 @@ type TeamsGraphProps = {
 const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
 
     const groups = teams.map((team) => {
-        if (!team.points) {
+        if (!team.score?.points) {
             return null
         }
 
-        const data = getPoints(team.points)
+        const data = getPoints(team.score.points)
 
         return (
             <VictoryGroup

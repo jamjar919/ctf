@@ -10,10 +10,9 @@ const getWinningTeam = (teams: Team[]): Team | null => {
     }
 
     return teams.reduce((team, currentBest) => {
-        const teamPoints: number = team?.points.reduce((a, b) => a + b.adjustment, 0) ?? 0;
-        const currentBestPoints: number = currentBest?.points?.reduce((a, b) => a + b.adjustment, 0) ?? 0;
+        const currentBestPoints = currentBest?.score?.total ?? 0;
 
-        if (teamPoints > currentBestPoints) {
+        if (team?.score?.total > currentBestPoints) {
             return team;
         }
 

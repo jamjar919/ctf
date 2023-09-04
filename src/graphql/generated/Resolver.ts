@@ -69,12 +69,18 @@ export type QueryTeamArgs = {
   id: Scalars['TeamID'];
 };
 
+export type Score = {
+  __typename?: 'Score';
+  points: Array<Maybe<Points>>;
+  total: Scalars['Int'];
+};
+
 export type Team = {
   __typename?: 'Team';
   color: Scalars['String'];
   id: Scalars['TeamID'];
   name: Scalars['String'];
-  points?: Maybe<Array<Maybe<Points>>>;
+  score?: Maybe<Score>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -156,6 +162,7 @@ export type ResolversTypes = ResolversObject<{
   Points: ResolverTypeWrapper<Points>;
   PointsID: ResolverTypeWrapper<Scalars['PointsID']>;
   Query: ResolverTypeWrapper<{}>;
+  Score: ResolverTypeWrapper<Score>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Team: ResolverTypeWrapper<Team>;
   TeamID: ResolverTypeWrapper<Scalars['TeamID']>;
@@ -170,6 +177,7 @@ export type ResolversParentTypes = ResolversObject<{
   Points: Points;
   PointsID: Scalars['PointsID'];
   Query: {};
+  Score: Score;
   String: Scalars['String'];
   Team: Team;
   TeamID: Scalars['TeamID'];
@@ -204,11 +212,17 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   teams?: Resolver<Maybe<Array<Maybe<ResolversTypes['Team']>>>, ParentType, ContextType>;
 }>;
 
+export type ScoreResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Score'] = ResolversParentTypes['Score']> = ResolversObject<{
+  points?: Resolver<Array<Maybe<ResolversTypes['Points']>>, ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type TeamResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{
   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['TeamID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  points?: Resolver<Maybe<Array<Maybe<ResolversTypes['Points']>>>, ParentType, ContextType>;
+  score?: Resolver<Maybe<ResolversTypes['Score']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -222,6 +236,7 @@ export type Resolvers<ContextType = Context> = ResolversObject<{
   Points?: PointsResolvers<ContextType>;
   PointsID?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
+  Score?: ScoreResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
   TeamID?: GraphQLScalarType;
 }>;

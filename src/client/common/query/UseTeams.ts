@@ -7,11 +7,14 @@ const Query = gql`
             id
             name,
             color,
-            points {
-                id,
-                adjustment,
-                timestamp,
-                reason
+            score {
+                total,
+                points {
+                    id,
+                    adjustment,
+                    timestamp,
+                    reason
+                }
             }
         }
     }
