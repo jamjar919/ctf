@@ -20,10 +20,7 @@ type TeamsGraphProps = {
 }
 
 /**
- * Represent
- * @param teams
- * @param title
- * @constructor
+ * Show a graph of a list of teams, representing the points they have earned.
  */
 const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
 

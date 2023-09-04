@@ -2,32 +2,23 @@ import React from "react";
 import {gql, useQuery} from "@apollo/client";
 import {TeamsGraph} from "../common/component/graph/TeamsGraph";
 import {Team} from "../../graphql/generated/Resolver";
-
-const Query = gql`
-    query Teams {
-        teams {
-            id
-            name,
-            color,
-            points {
-                id,
-                adjustment,
-                timestamp,
-                reason
-            }
-        }
-    }
-`
+import {Legend} from "../common/component/team-list/Legend";
+import {useTeams} from "../common/query/UseTeams";
 
 type IndexProps = {}
 
 const Index: React.FC<IndexProps> = () => {
 
-    const { data, loading, error } = useQuery<{ teams: Team[] } | undefined>(Query);
+    const { data, loading, error } = useTeams();
 
     return (
         <div>
-            {data?.teams && <TeamsGraph teams={data.teams} title={"://Leaderboard"} showLegend={true}  />}
+            {data?.teams && (
+                <>
+                    <TeamsGraph teams={data.teams} title={"://Leaderboard"} />
+                    <Legend teams={data.teams} />
+                </>
+            )}
         </div>
     )
 }
