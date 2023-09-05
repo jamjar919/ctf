@@ -1,6 +1,9 @@
 import React from "react";
 import {Team} from "../../../../graphql/generated/Resolver";
 import {getAxisText} from "../graph/util/GetAxisText";
+import {AdminAddPointsForm} from "../admin/admin-add-points/AdminAddPointsForm";
+import {useAdminContext} from "../../context/AdminContext";
+import {AdminDeletePointsButton} from "../admin/admin-delete-points/AdminDeletePoints";
 
 import styles from "./PointsTable.module.scss";
 
@@ -18,15 +21,9 @@ const getIndicator = (adjustment: number): string => {
 
 const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
 
-    if (!team?.score?.points || team?.score?.points.length === 0) {
-        return (
-            <div className={styles.noPoints}>
-                No points for this team yet
-            </div>
-        )
-    }
+    const { enableAdminTools } = useAdminContext();
 
-    const rows = team.score.points.map((points) => {
+    const rows = (team?.score?.points ?? []).map((points) => {
         if (!points) {
             return null;
         }
@@ -37,24 +34,37 @@ const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
                 <td className={styles.timestamp}>{getAxisText(points.timestamp)}</td>
                 <td className={styles.adjustment}>{points.adjustment}</td>
                 <td className={styles.reason}>{points.reason}</td>
+                {enableAdminTools && <td className={styles.edit}><AdminDeletePointsButton pointsId={points.id}/></td>}
             </tr>
         );
-    })
+    });
+
+    if (rows.length === 0) {
+        rows.push(
+            <div className={styles.noPoints}>
+                No points for this team yet
+            </div>
+        )
+    }
 
     return (
-        <table className={styles.table}>
-            <thead>
-                <tr>
-                    <td className={styles.indicator}>o</td>
-                    <td className={styles.timestamp}>Time</td>
-                    <td className={styles.adjustment}>Points</td>
-                    <td className={styles.reason}>Reason</td>
-                </tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
+        <>
+            <table className={styles.table}>
+                <thead>
+                    <tr>
+                        <td className={styles.indicator}>o</td>
+                        <td className={styles.timestamp}>Time</td>
+                        <td className={styles.adjustment}>Points</td>
+                        <td className={styles.reason}>Reason</td>
+                        {enableAdminTools && <td className={styles.edit}>Delete</td>}
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+            {enableAdminTools && <AdminAddPointsForm key={"add-points"} team={team} />}
+        </>
     )
 }
 

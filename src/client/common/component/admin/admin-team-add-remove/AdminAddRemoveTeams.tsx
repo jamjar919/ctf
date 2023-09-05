@@ -1,5 +1,5 @@
 import React from "react";
-import {AdminAddNewTeam} from "../admin-add-new-team/AdminAddNewTeam";
+import {AdminAddNewTeamForm} from "../admin-add-new-team/AdminAddNewTeamForm";
 import {AdminTeamList} from "../admin-team-list/AdminTeamList";
 
 const AdminAddRemoveTeams: React.FC = () => {
@@ -7,7 +7,7 @@ const AdminAddRemoveTeams: React.FC = () => {
         <div>
             <h2>Admin 🚧</h2>
             <AdminTeamList />
-            <AdminAddNewTeam />
+            <AdminAddNewTeamForm />
         </div>
     )
 }

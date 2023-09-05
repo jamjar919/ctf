@@ -10,8 +10,6 @@ import {FullscreenLoader} from "../../fullscreen-loader/FullscreenLoader";
 import styles from "./SelectedTeamModal.module.scss";
 import {AsciiLoader} from "../../ascii-loader/AsciiLoader";
 import {AsciiLoaderTilesetType} from "../../ascii-loader/AsciiLoaderTileset";
-import {useAdminContext} from "../../../context/AdminContext";
-import {AdminAddPoints} from "../../admin/admin-add-points/AdminAddPoints";
 
 type SelectedTeamModalProps = {
     id: string;
@@ -22,8 +20,6 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
 
     const { deselectTeam } = useSelectContext();
 
-    const { enableAdminTools } = useAdminContext();
-
     const { data, loading, error } = useTeam(id);
 
     const content = (loading || error) ? <FullscreenLoader /> : (
@@ -32,7 +28,6 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
                 <MiniTeamGraph team={data!.team} />
             </div>
             <PointsTable team={data!.team} />
-            {enableAdminTools && <AdminAddPoints team={data!.team} />}
         </div>
     );
 

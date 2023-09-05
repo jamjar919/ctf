@@ -20,7 +20,7 @@ export const resolvers: Resolvers = {
         score: async (parent: Team): Promise<Score> => getTeamScore(parent.id)
     },
     Mutation: {
-        addTeam: (_, { teamName }, { authenticationLevel}): Promise<Team> => {
+        addTeam: async (_, { teamName }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
@@ -30,26 +30,32 @@ export const resolvers: Resolvers = {
                 name: teamName
             }
 
-            return teamCollection.insertOne(document)
-                .then(result => {
-                    if (result.insertedId) {
-                        return getTeam(result.insertedId)
-                    }
+            const result = await teamCollection.insertOne(document);
 
-                    throw new Error("Error adding team")
-                });
+            if (result.insertedId) {
+                return getTeam(result.insertedId)
+            }
+
+            throw new Error("Error adding team")
         },
-        deleteTeam: (_, { id }, { authenticationLevel}): Promise<boolean> => {
+        deleteTeam: async (_, { id }, { authenticationLevel}): Promise<boolean> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
 
-            return teamCollection.deleteOne({ _id: id })
-                .then((result) => {
-                    return result.deletedCount > 0;
-                });
+            // Delete the team
+            const result = await teamCollection.deleteOne({ _id: id });
+
+            if (result.deletedCount <= 0) {
+                throw new Error("No team with id " + id)
+            }
+
+            // Delete points for that team
+            await pointsCollection.deleteMany({ team: id });
+
+            return true;
         },
-        addPoints: (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<Team> => {
+        addPoints: async (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
@@ -62,24 +68,22 @@ export const resolvers: Resolvers = {
                 timestamp: timestamp ?? new Date().toISOString()
             }
 
-            return pointsCollection.insertOne(document)
-                .then(result => {
-                    if (result.insertedId) {
-                        return getTeam(teamId)
-                    }
+            const result = await pointsCollection.insertOne(document)
 
-                    throw new Error("Error adding team")
-                });
+            if (result.insertedId) {
+                return getTeam(teamId)
+            }
+
+            throw new Error("Error adding points for team")
         },
-        deletePoints: (_, { id }, { authenticationLevel}): Promise<boolean> => {
+        deletePoints: async (_, { id }, { authenticationLevel}): Promise<boolean> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
 
-            return pointsCollection.deleteOne({ _id: id })
-                .then((result) => {
-                    return result.deletedCount > 0;
-                });
+            const result = await pointsCollection.deleteOne({ _id: id })
+
+            return result.deletedCount > 0;
         },
     }
 }

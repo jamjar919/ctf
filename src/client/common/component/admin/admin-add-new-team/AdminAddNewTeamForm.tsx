@@ -2,7 +2,7 @@ import React from "react";
 import {Field, Form, Formik} from "formik";
 import {useCreateTeam} from "../../../query/UseCreateTeam";
 
-const AdminAddNewTeam: React.FC = () => {
+const AdminAddNewTeamForm: React.FC = () => {
     const [mutateFunction] = useCreateTeam();
 
     return (
@@ -29,4 +29,4 @@ const AdminAddNewTeam: React.FC = () => {
     )
 }
 
-export { AdminAddNewTeam }
+export { AdminAddNewTeamForm };
