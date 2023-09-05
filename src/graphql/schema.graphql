@@ -28,14 +28,14 @@ type Query {
 }
 
 type Mutation {
-    addTeam(teamName: String!): Boolean,
+    addTeam(teamName: String!): Team,
     deleteTeam(id: TeamID!): Boolean,
     addPoints(
         teamId: TeamID!,
         adjustment: Int!,
         reason: String!,
         timestamp: DateTime
-    ): Boolean,
+    ): Team,
     deletePoints(
         id: PointsID!
     ): Boolean

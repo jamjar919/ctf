@@ -20,8 +20,8 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addPoints?: Maybe<Scalars['Boolean']>;
-  addTeam?: Maybe<Scalars['Boolean']>;
+  addPoints?: Maybe<Team>;
+  addTeam?: Maybe<Team>;
   deletePoints?: Maybe<Scalars['Boolean']>;
   deleteTeam?: Maybe<Scalars['Boolean']>;
 };
@@ -188,8 +188,8 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
 }
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  addPoints?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationAddPointsArgs, 'adjustment' | 'reason' | 'teamId'>>;
-  addTeam?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationAddTeamArgs, 'teamName'>>;
+  addPoints?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddPointsArgs, 'adjustment' | 'reason' | 'teamId'>>;
+  addTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddTeamArgs, 'teamName'>>;
   deletePoints?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeletePointsArgs, 'id'>>;
   deleteTeam?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTeamArgs, 'id'>>;
 }>;

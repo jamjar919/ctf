@@ -1,25 +1,16 @@
 import {gql, useQuery} from "@apollo/client";
 import {Team} from "../../../graphql/generated/Resolver";
+import {TeamFragment} from "./fragment/TeamFragment";
 
-const Query = gql`
+const FETCH_ALL_TEAMS_QUERY = gql`
+    ${TeamFragment}
     query Teams {
         teams {
-            id
-            name,
-            color,
-            score {
-                total,
-                points {
-                    id,
-                    adjustment,
-                    timestamp,
-                    reason
-                }
-            }
+            ...TeamProperties
         }
     }
 `
 
-const useTeams = () => useQuery<{ teams: Team[] } | undefined>(Query);
+const useTeams = () => useQuery<{ teams: Team[] } | undefined>(FETCH_ALL_TEAMS_QUERY);
 
-export { useTeams }
+export { useTeams, FETCH_ALL_TEAMS_QUERY }

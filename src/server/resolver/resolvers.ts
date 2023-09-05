@@ -1,11 +1,12 @@
 import {v1} from "uuid";
-import {Points, Resolvers, Score, Team} from "../../graphql/generated/Resolver";
+import {Resolvers, Score, Team} from "../../graphql/generated/Resolver";
 import {pointsCollection, teamCollection} from "../database/mongoClient";
 import {mapDatabaseTeamToGraph} from "./converter/mapDatabaseTeamToGraph";
-import {mapDatabasePointsToGraph} from "./converter/mapDatabasePointsToGraph";
 import {MongoTeam} from "../database/type/MongoTeam";
 import {MongoPoints} from "../database/type/MongoPoints";
 import {AuthenticationLevel} from "../../graphql/Context";
+import {getTeam} from "./retriever/getTeam";
+import {getTeamScore} from "./retriever/getTeamScore";
 
 export const resolvers: Resolvers = {
     Query: {
@@ -13,33 +14,13 @@ export const resolvers: Resolvers = {
             return (await teamCollection.find({}).toArray())
                 .map(mapDatabaseTeamToGraph);
         },
-        team: async (_, { id }): Promise<Team | null>  => {
-            const maybeTeam: MongoTeam | null = await teamCollection.findOne({ _id: id });
-
-            if (maybeTeam == null) {
-                return null;
-            }
-
-            return mapDatabaseTeamToGraph(maybeTeam);
-        }
+        team: async (_, { id }): Promise<Team | null>  => getTeam(id)
     },
     Team: {
-        score: async (parent: Team): Promise<Score> => {
-            const teamId = parent.id;
-
-            const points: Points[] = (await pointsCollection.find({ team: teamId }).toArray())
-                .map(mapDatabasePointsToGraph);
-
-            const total = points.reduce((a, b) => a + b.adjustment, 0);
-
-            return {
-                points,
-                total
-            }
-        }
+        score: async (parent: Team): Promise<Score> => getTeamScore(parent.id)
     },
     Mutation: {
-        addTeam: (_, { teamName }, { authenticationLevel}): Promise<boolean> => {
+        addTeam: (_, { teamName }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
@@ -51,8 +32,12 @@ export const resolvers: Resolvers = {
 
             return teamCollection.insertOne(document)
                 .then(result => {
-                    return !!result.insertedId;
-                })
+                    if (result.insertedId) {
+                        return getTeam(result.insertedId)
+                    }
+
+                    throw new Error("Error adding team")
+                });
         },
         deleteTeam: (_, { id }, { authenticationLevel}): Promise<boolean> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
@@ -64,7 +49,7 @@ export const resolvers: Resolvers = {
                     return result.deletedCount > 0;
                 });
         },
-        addPoints: (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<boolean> => {
+        addPoints: (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
@@ -79,8 +64,12 @@ export const resolvers: Resolvers = {
 
             return pointsCollection.insertOne(document)
                 .then(result => {
-                    return !!result.insertedId;
-                })
+                    if (result.insertedId) {
+                        return getTeam(teamId)
+                    }
+
+                    throw new Error("Error adding team")
+                });
         },
         deletePoints: (_, { id }, { authenticationLevel}): Promise<boolean> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
