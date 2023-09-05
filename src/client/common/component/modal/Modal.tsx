@@ -60,7 +60,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                     onDragEnter={() => setVisible(false)}
                     onDragEnd={(e) => {
                         e.preventDefault();
-                        setPosition([e.clientX, e.clientY]);
+                        setPosition([window.scrollX + e.clientX, window.scrollY + e.clientY]);
                         setVisible(true);
                     }}
                 >
