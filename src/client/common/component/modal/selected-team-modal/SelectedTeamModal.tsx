@@ -11,6 +11,7 @@ import styles from "./SelectedTeamModal.module.scss";
 import {AsciiLoader} from "../../ascii-loader/AsciiLoader";
 import {AsciiLoaderTilesetType} from "../../ascii-loader/AsciiLoaderTileset";
 import {useAdminContext} from "../../../context/AdminContext";
+import {AdminAddPoints} from "../../admin/admin-add-points/AdminAddPoints";
 
 type SelectedTeamModalProps = {
     id: string;
@@ -31,6 +32,7 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
                 <MiniTeamGraph team={data!.team} />
             </div>
             <PointsTable team={data!.team} />
+            {enableAdminTools && <AdminAddPoints team={data!.team} />}
         </div>
     );
 
@@ -43,7 +45,6 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
             onClose={() => deselectTeam(id)}
         >
             {content}
-            {enableAdminTools && <div>points</div>}
         </Modal>
     )
 }

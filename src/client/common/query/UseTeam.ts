@@ -4,7 +4,7 @@ import {TeamFragment} from "./fragment/TeamFragment";
 
 const FETCH_TEAM_QUERY = gql`
     ${TeamFragment}
-    query Query($teamId: TeamID!) {
+    query Query($teamId: ID!) {
         team(id: $teamId) {
             ...TeamProperties
         }

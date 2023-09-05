@@ -14,8 +14,6 @@ export type Scalars = {
   Int: number;
   Float: number;
   DateTime: any;
-  PointsID: any;
-  TeamID: any;
 };
 
 export type Mutation = {
@@ -30,7 +28,7 @@ export type Mutation = {
 export type MutationAddPointsArgs = {
   adjustment: Scalars['Int'];
   reason: Scalars['String'];
-  teamId: Scalars['TeamID'];
+  teamId: Scalars['ID'];
   timestamp?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -41,20 +39,20 @@ export type MutationAddTeamArgs = {
 
 
 export type MutationDeletePointsArgs = {
-  id: Scalars['PointsID'];
+  id: Scalars['ID'];
 };
 
 
 export type MutationDeleteTeamArgs = {
-  id: Scalars['TeamID'];
+  id: Scalars['ID'];
 };
 
 export type Points = {
   __typename?: 'Points';
   adjustment: Scalars['Int'];
-  id: Scalars['PointsID'];
+  id: Scalars['ID'];
   reason: Scalars['String'];
-  team: Scalars['TeamID'];
+  team: Scalars['ID'];
   timestamp: Scalars['DateTime'];
 };
 
@@ -66,7 +64,7 @@ export type Query = {
 
 
 export type QueryTeamArgs = {
-  id: Scalars['TeamID'];
+  id: Scalars['ID'];
 };
 
 export type Score = {
@@ -78,7 +76,7 @@ export type Score = {
 export type Team = {
   __typename?: 'Team';
   color: Scalars['String'];
-  id: Scalars['TeamID'];
+  id: Scalars['ID'];
   name: Scalars['String'];
   score?: Maybe<Score>;
 };
@@ -157,30 +155,28 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Mutation: ResolverTypeWrapper<{}>;
   Points: ResolverTypeWrapper<Points>;
-  PointsID: ResolverTypeWrapper<Scalars['PointsID']>;
   Query: ResolverTypeWrapper<{}>;
   Score: ResolverTypeWrapper<Score>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Team: ResolverTypeWrapper<Team>;
-  TeamID: ResolverTypeWrapper<Scalars['TeamID']>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   DateTime: Scalars['DateTime'];
+  ID: Scalars['ID'];
   Int: Scalars['Int'];
   Mutation: {};
   Points: Points;
-  PointsID: Scalars['PointsID'];
   Query: {};
   Score: Score;
   String: Scalars['String'];
   Team: Team;
-  TeamID: Scalars['TeamID'];
 }>;
 
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
@@ -196,16 +192,12 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
 
 export type PointsResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Points'] = ResolversParentTypes['Points']> = ResolversObject<{
   adjustment?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['PointsID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   reason?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  team?: Resolver<ResolversTypes['TeamID'], ParentType, ContextType>;
+  team?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
-
-export interface PointsIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['PointsID'], any> {
-  name: 'PointsID';
-}
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<QueryTeamArgs, 'id'>>;
@@ -220,24 +212,18 @@ export type ScoreResolvers<ContextType = Context, ParentType extends ResolversPa
 
 export type TeamResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{
   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['TeamID'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   score?: Resolver<Maybe<ResolversTypes['Score']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export interface TeamIdScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['TeamID'], any> {
-  name: 'TeamID';
-}
-
 export type Resolvers<ContextType = Context> = ResolversObject<{
   DateTime?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Points?: PointsResolvers<ContextType>;
-  PointsID?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   Score?: ScoreResolvers<ContextType>;
   Team?: TeamResolvers<ContextType>;
-  TeamID?: GraphQLScalarType;
 }>;
 

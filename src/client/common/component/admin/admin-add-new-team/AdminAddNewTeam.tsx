@@ -17,13 +17,14 @@ const AdminAddNewTeam: React.FC = () => {
                     }
                 }).then(() => formikHelpers.resetForm())
             }}
-        >
+        >{(formikProps) => (
             <Form>
-                <Field name="teamName" />
-                <button type={"submit"}>
+                <Field name="teamName" disabled={formikProps.isSubmitting} />
+                <button type={"submit"} disabled={formikProps.isSubmitting}>
                     Add team
                 </button>
             </Form>
+        )}
         </Formik>
     )
 }
