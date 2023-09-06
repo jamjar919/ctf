@@ -41,9 +41,11 @@ const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
 
     if (rows.length === 0) {
         rows.push(
-            <div className={styles.noPoints}>
-                No points for this team yet
-            </div>
+            <tr className={styles.noPoints}>
+                <td>
+                    No points for this team yet
+                </td>
+            </tr>
         )
     }
 

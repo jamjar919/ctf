@@ -17,7 +17,7 @@ const AdminAddRemoveTeams: React.FC = () => {
                     <tbody>
                     {data.teams.map((team) => {
                         return (
-                            <tr>
+                            <tr key={team.id}>
                                 <td>{team.name}</td>
                             </tr>
                         )

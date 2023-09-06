@@ -135,7 +135,7 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
                 <VictoryAxis
                     crossAxis
                     gridComponent={<LineSegment style={{ backgroundColor: "black" }} />}
-                    tickCount={20}
+                    tickCount={12}
                     tickFormat={(t: Date) => getAxisText(t)}
                     tickLabelComponent={<VictoryLabel angle={45} />}
                     style={{
