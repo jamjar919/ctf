@@ -72,7 +72,7 @@ const AdminUpdateTeamForm: React.FC<AdminUpdateTeamFormProps> = ({ team, afterSu
             }>Delete</button>
             <button
                 className={styles.cancel}
-                onClick={() => afterSubmit()}
+                onClick={() => afterSubmit && afterSubmit()}
             >Cancel</button>
         </span>
     )
