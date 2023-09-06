@@ -41,7 +41,7 @@ const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
 
     if (rows.length === 0) {
         rows.push(
-            <tr className={styles.noPoints}>
+            <tr key="no-points" className={styles.noPoints}>
                 <td>
                     No points for this team yet
                 </td>
