@@ -1,7 +1,7 @@
 import React from "react";
 import {Team} from "../../../../../graphql/generated/Resolver";
 import {ErrorMessage, Field, Form, Formik} from "formik";
-import {useAddPoints} from "../../../query/UseAddPoints";
+import {useAddPoints} from "../../../query/mutation/UseAddPoints";
 import * as Yup from 'yup';
 
 import styles from "../../points-table/PointsTable.module.scss";

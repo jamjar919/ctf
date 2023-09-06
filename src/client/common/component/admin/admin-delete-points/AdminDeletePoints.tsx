@@ -1,5 +1,5 @@
 import React from "react";
-import {useDeletePoints} from "../../../query/UseDeletePoints";
+import {useDeletePoints} from "../../../query/mutation/UseDeletePoints";
 
 import styles from "./AdminDeletePoints.module.scss";
 

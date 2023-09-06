@@ -1,0 +1,13 @@
+.table {
+  width: 100%;
+
+  thead {
+    font-weight: bold;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+}

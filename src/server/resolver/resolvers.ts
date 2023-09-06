@@ -55,6 +55,25 @@ export const resolvers: Resolvers = {
 
             return true;
         },
+        updateTeamColor: async (_, { id, newColor }, { authenticationLevel}): Promise<Team> => {
+            if (authenticationLevel !== AuthenticationLevel.ADMIN) {
+                throw new Error("Not authenticated");
+            }
+
+            const result = await teamCollection.updateOne(
+                { _id: id },
+                {
+                    "$set":{
+                        color: newColor
+                    }
+                });
+
+            if (result.modifiedCount <= 0) {
+                throw new Error("Couldn't update colour for any team " + id)
+            }
+
+            return getTeam(id);
+        },
         addPoints: async (_, { teamId, adjustment, reason, timestamp }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");

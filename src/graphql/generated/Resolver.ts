@@ -22,6 +22,7 @@ export type Mutation = {
   addTeam?: Maybe<Team>;
   deletePoints?: Maybe<Scalars['Boolean']>;
   deleteTeam?: Maybe<Scalars['Boolean']>;
+  updateTeamColor?: Maybe<Team>;
 };
 
 
@@ -45,6 +46,12 @@ export type MutationDeletePointsArgs = {
 
 export type MutationDeleteTeamArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationUpdateTeamColorArgs = {
+  id: Scalars['ID'];
+  newColor: Scalars['String'];
 };
 
 export type Points = {
@@ -188,6 +195,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   addTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddTeamArgs, 'teamName'>>;
   deletePoints?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeletePointsArgs, 'id'>>;
   deleteTeam?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTeamArgs, 'id'>>;
+  updateTeamColor?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationUpdateTeamColorArgs, 'id' | 'newColor'>>;
 }>;
 
 export type PointsResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Points'] = ResolversParentTypes['Points']> = ResolversObject<{

@@ -1,5 +1,5 @@
 import {gql, useMutation} from "@apollo/client";
-import {FETCH_ALL_TEAMS_QUERY} from "./UseTeams";
+import {FETCH_ALL_TEAMS_QUERY} from "../UseTeams";
 
 const Query = gql`
     mutation DeleteTeam($teamId: ID!) {

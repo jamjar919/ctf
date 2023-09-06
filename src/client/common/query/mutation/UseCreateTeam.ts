@@ -1,6 +1,6 @@
 import {gql, useMutation} from "@apollo/client";
-import {FETCH_ALL_TEAMS_QUERY} from "./UseTeams";
-import {TeamFragment} from "./fragment/TeamFragment";
+import {FETCH_ALL_TEAMS_QUERY} from "../UseTeams";
+import {TeamFragment} from "../fragment/TeamFragment";
 
 const Query = gql`
     ${TeamFragment}

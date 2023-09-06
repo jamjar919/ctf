@@ -10,6 +10,8 @@ import {FullscreenLoader} from "../../fullscreen-loader/FullscreenLoader";
 import styles from "./SelectedTeamModal.module.scss";
 import {AsciiLoader} from "../../ascii-loader/AsciiLoader";
 import {AsciiLoaderTilesetType} from "../../ascii-loader/AsciiLoaderTileset";
+import {AdminUpdateTeamColorInput} from "../../admin/admin-update-team/AdminUpdateTeamColorInput";
+import {AdminDeleteTeamButton} from "../../admin/admin-update-team/AdminDeleteTeamButton";
 
 type SelectedTeamModalProps = {
     id: string;
@@ -28,6 +30,8 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
                 <MiniTeamGraph team={data!.team} />
             </div>
             <PointsTable team={data!.team} />
+            <AdminUpdateTeamColorInput team={data!.team} />
+            <AdminDeleteTeamButton team={data!.team} />
         </div>
     );
 

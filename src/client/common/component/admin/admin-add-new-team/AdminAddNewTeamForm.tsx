@@ -1,6 +1,6 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
-import {useCreateTeam} from "../../../query/UseCreateTeam";
+import {useCreateTeam} from "../../../query/mutation/UseCreateTeam";
 
 const AdminAddNewTeamForm: React.FC = () => {
     const [mutateFunction] = useCreateTeam();
