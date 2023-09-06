@@ -34,7 +34,7 @@ const AdminUpdateTeamForm: React.FC<AdminUpdateTeamFormProps> = ({ team, afterSu
                         }
                     });
 
-                    afterSubmit?.();
+                    afterSubmit && afterSubmit();
                     formikHelpers.resetForm();
                 }}
             >
