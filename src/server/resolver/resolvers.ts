@@ -55,7 +55,7 @@ export const resolvers: Resolvers = {
 
             return true;
         },
-        updateTeamColor: async (_, { id, newColor }, { authenticationLevel}): Promise<Team> => {
+        updateTeam: async (_, { id, newName, newColor }, { authenticationLevel}): Promise<Team> => {
             if (authenticationLevel !== AuthenticationLevel.ADMIN) {
                 throw new Error("Not authenticated");
             }
@@ -64,6 +64,7 @@ export const resolvers: Resolvers = {
                 { _id: id },
                 {
                     "$set":{
+                        name: newName,
                         color: newColor
                     }
                 });

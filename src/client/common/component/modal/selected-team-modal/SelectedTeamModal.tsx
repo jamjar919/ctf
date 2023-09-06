@@ -1,17 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import {useSelectContext} from "../../../context/SelectContext";
 import {Modal} from "../Modal";
 import {useTeam} from "../../../query/UseTeam";
 import {getSensibleInitialPosition} from "../util/GetSensibleInitialPosition";
 import {MiniTeamGraph} from "../../graph/mini/MiniTeamGraph";
 import {PointsTable} from "../../points-table/PointsTable";
-import {FullscreenLoader} from "../../fullscreen-loader/FullscreenLoader";
-
-import styles from "./SelectedTeamModal.module.scss";
 import {AsciiLoader} from "../../ascii-loader/AsciiLoader";
 import {AsciiLoaderTilesetType} from "../../ascii-loader/AsciiLoaderTileset";
-import {AdminUpdateTeamColorInput} from "../../admin/admin-update-team/AdminUpdateTeamColorInput";
-import {AdminDeleteTeamButton} from "../../admin/admin-update-team/AdminDeleteTeamButton";
+
+import styles from "./SelectedTeamModal.module.scss";
+import {SelectedTeamModalTitle} from "./SelectedTeamModalTitle";
 
 type SelectedTeamModalProps = {
     id: string;
@@ -24,20 +22,18 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
 
     const { data, loading, error } = useTeam(id);
 
-    const content = (loading || error) ? <FullscreenLoader /> : (
+    const content = (loading || error) ? <AsciiLoader type={AsciiLoaderTilesetType.Circle} />: (
         <div className={styles.content}>
             <div className={styles.graph}>
                 <MiniTeamGraph team={data!.team} />
             </div>
             <PointsTable team={data!.team} />
-            <AdminUpdateTeamColorInput team={data!.team} />
-            <AdminDeleteTeamButton team={data!.team} />
         </div>
     );
 
     return (
         <Modal
-            title={data?.team?.name ?? <AsciiLoader type={AsciiLoaderTilesetType.Sonar} />}
+            title={<SelectedTeamModalTitle team={data?.team} />}
             height={500}
             initialPosition={getSensibleInitialPosition()}
             closable

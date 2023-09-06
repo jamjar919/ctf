@@ -6,29 +6,29 @@ import {FETCH_TEAM_QUERY} from "../UseTeam";
 
 const Query = gql`
     ${TeamFragment}
-    mutation UpdateTeamColor($id: ID!, $newColor: String!) {
-        updateTeamColor(id: $id, newColor: $newColor) {
+    mutation UpdateTeam($id: ID!, $newName: String! , $newColor: String!) {
+        updateTeam(id: $id, newName: $newName, newColor: $newColor) {
             ...TeamProperties
         }
     }
 `
 
-const useUpdateTeamColor = () => useMutation(Query, {
+const useUpdateTeam = () => useMutation(Query, {
     refetchQueries: [
         FETCH_ALL_TEAMS_QUERY,
         FETCH_TEAM_QUERY
     ],
-    update: (cache, { data: { updateTeamColor } }) => {
+    update: (cache, { data: { updateTeam } }) => {
         cache.modify({
             fields: {
                 teams: (existingTeams: Team[] = []) => {
                     const newTeamRef = cache.writeFragment({
-                        data: updateTeamColor,
+                        data: updateTeam,
                         fragment: gql`${TeamFragment}`
                     });
 
                     return [
-                        ...existingTeams.filter((t) => t.id !== updateTeamColor.id),
+                        ...existingTeams.filter((t) => t.id !== updateTeam.id),
                         newTeamRef
                     ]
                 }
@@ -37,4 +37,4 @@ const useUpdateTeamColor = () => useMutation(Query, {
     },
 });
 
-export { useUpdateTeamColor }
+export { useUpdateTeam }

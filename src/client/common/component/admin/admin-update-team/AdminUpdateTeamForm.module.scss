@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: -5px;
+  border: 1px solid black;
+
+  input, button {
+    padding: 0;
+    margin : 0;
+    height: 30px;
+    border-top: none;
+    border-bottom: none;
+  }
+}
+
+.editForm {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+}
+
+.name {
+  flex: 1 1;
+}
+
+.color {
+  flex: 0 1 75px;
+}
+
+.update, .delete, .cancel {
+  flex: 0 1 60px;
+}

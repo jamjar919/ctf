@@ -27,7 +27,7 @@ type Query {
 
 type Mutation {
     addTeam(teamName: String!): Team,
-    updateTeamColor(id: ID!, newColor: String!): Team,
+    updateTeam(id: ID!, newName: String!, newColor: String!): Team,
     deleteTeam(id: ID!): Boolean,
     addPoints(
         teamId: ID!,
