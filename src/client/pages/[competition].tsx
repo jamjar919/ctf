@@ -4,11 +4,34 @@ import {Legend} from "../common/component/team-list/Legend";
 import {useCompetition} from "../common/query/UseCompetition";
 import {FullscreenLoader} from "../common/component/fullscreen-loader/FullscreenLoader";
 import {AdminHotCorner} from "../common/component/admin/admin-hot-corner/AdminHotCorner";
-import {useCurrentCompetitionIdFromUrl} from "../common/hook/UseCurrentCompetitionIdFromUrl";
+import {GetStaticPaths} from "next";
 
-const CompetitionPage: React.FC = () =>  {
+export const getStaticPaths = (async () => {
+    return {
+        paths: [
+            {
+                params: {
+                    competition: "test"
+                },
+            },
+        ],
+        fallback: true,
+    }
+}) satisfies GetStaticPaths
 
-    const competition = useCurrentCompetitionIdFromUrl();
+// This also gets called at build time
+export async function getStaticProps({ params }: { params: Record<string, string> }) {
+    const competition = params.competition ?? "";
+
+    // Pass post data to the page via props
+    return { props: { competition } }
+}
+
+type CompetitionPageProps = {
+    competition: string;
+}
+
+const CompetitionPage: React.FC<CompetitionPageProps> = ({ competition }) =>  {
 
     const { data, loading, error } = useCompetition(competition!);
 
