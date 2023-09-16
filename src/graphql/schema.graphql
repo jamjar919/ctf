@@ -31,6 +31,7 @@ type Competition {
 
 type Query {
     competition(id: ID!): Competition!
+    competitions: [Competition!]!
     team(id: ID!): Team
 }
 

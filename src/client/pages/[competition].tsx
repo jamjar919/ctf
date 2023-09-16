@@ -6,10 +6,11 @@ import {FullscreenLoader} from "../common/component/fullscreen-loader/Fullscreen
 import {AdminHotCorner} from "../common/component/admin/admin-hot-corner/AdminHotCorner";
 import {useCurrentCompetitionIdFromUrl} from "../common/hook/UseCurrentCompetitionIdFromUrl";
 
-const CompetitionPage: React.FC = () => {
+const CompetitionPage: React.FC = () =>  {
+
     const competition = useCurrentCompetitionIdFromUrl();
 
-    const { data, loading, error } = useCompetition(competition);
+    const { data, loading, error } = useCompetition(competition!);
 
     if (loading) {
         return <FullscreenLoader />

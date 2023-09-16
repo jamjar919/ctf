@@ -8,12 +8,31 @@ import {AdminContextProvider} from "../common/context/AdminContext";
 
 import './app.scss'
 
-const App: AppComponent = ({ Component, pageProps }) => {
+export async function generateStaticParams() {
+    // const competitions: Competition[] = await fetch('http://localhost:16000', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ query: FETCH_COMPETITIONS_QUERY }),
+    // })
+    // .then(res => res.json());
+    //
+    // console.log(competitions);
+    //
+    // return competitions.map((competition: Competition) => ({
+    //     competition: competition.id,
+    // }))
+
+    return Promise.resolve([{
+        competition: "test"
+    }]);
+}
+
+const App: AppComponent = ({ children }) => {
     return (
         <ApolloProvider client={client}>
             <SelectContextProvider>
                 <AdminContextProvider>
-                    <Component {...pageProps} />
+                    {children}
                     <ModalManager />
                 </AdminContextProvider>
             </SelectContextProvider>
