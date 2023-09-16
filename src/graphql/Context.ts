@@ -7,4 +7,5 @@ interface Context {
     authenticationLevel: AuthenticationLevel;
 }
 
-export { Context, AuthenticationLevel }
+export { AuthenticationLevel }
+export type { Context }

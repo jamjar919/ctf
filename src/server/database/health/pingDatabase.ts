@@ -10,6 +10,7 @@ const pingDatabase = () => {
         .connect()
         .then(() => mongoClient.db("admin").command({ ping: 1 })) // Ping
         .then(() => console.log("📡 Connected to MongoDB"))
+        .catch((e) => console.error("🚫📡 No DB connection", e))
 }
 
 export { pingDatabase }
