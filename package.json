@@ -10,11 +10,17 @@
     "start": "npm-run-all delete-all build:server build:client start:server start:client logs",
     "logs": "pm2 logs",
     "delete-all": "pm2 delete all",
-    "start:server": "pm2 start ./dist/server.js --name ctf-server",
-    "start:client": "pm2 start \"next start ./src/client -p 80\" --name ctf-client",
-    "build:client": "next build ./src/client",
-    "build:client:dev": "next dev ./src/client",
+
+    "start:server": "npm-run-all build:server pm2:start:server",
     "build:server": "npx webpack --config webpack.server.config.js",
+    "pm2:start:server": "pm2 start ./dist/server.js --name ctf-server",
+
+    "start:client": "npm-run-all build:client pm2:start:client",
+    "build:client": "next build ./src/client",
+    "pm2:start:client": "pm2 start \"next start ./src/client -p 80\" --name ctf-client",
+
+
+    "build:client:dev": "next dev ./src/client",
     "build:server:dev": "npx webpack -w --config webpack.server.config.js --mode=development",
     "test": "jest",
     "graphql": "graphql-codegen --config graphql-codegen.yml"
