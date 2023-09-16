@@ -2,11 +2,9 @@ import {Points, Score} from "../../../graphql/generated/Resolver";
 import {pointsCollection} from "../../database/mongoClient";
 import {mapDatabasePointsToGraph} from "../converter/mapDatabasePointsToGraph";
 
-const getTeamScore = async (teamId: string, competitionId: string): Promise<Score> => {
-    const points: Points[] = (await pointsCollection.find({
-        teamId,
-        competitionId
-    }).toArray()).map(mapDatabasePointsToGraph);
+const getTeamScore = async (teamId: string): Promise<Score> => {
+    const points: Points[] = (await pointsCollection.find({ teamId }).toArray())
+        .map(mapDatabasePointsToGraph);
 
     points.sort((a: Points, b: Points): number => {
         if (new Date(a.timestamp) < new Date(b.timestamp)) {
@@ -20,7 +18,6 @@ const getTeamScore = async (teamId: string, competitionId: string): Promise<Scor
 
     return {
         teamId,
-        competitionId,
         points,
         total
     }

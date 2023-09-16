@@ -1,5 +1,5 @@
 import {gql, useMutation} from "@apollo/client";
-import {FETCH_ALL_TEAMS_QUERY} from "../UseTeams";
+import {FETCH_COMPETITION_QUERY} from "../UseCompetition";
 import {FETCH_TEAM_QUERY} from "../UseTeam";
 
 const Query = gql`
@@ -10,7 +10,7 @@ const Query = gql`
 
 const useDeletePoints = () => useMutation(Query, {
     refetchQueries: [
-        FETCH_ALL_TEAMS_QUERY,
+        FETCH_COMPETITION_QUERY,
         FETCH_TEAM_QUERY
     ],
 });

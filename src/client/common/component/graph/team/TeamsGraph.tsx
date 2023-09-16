@@ -12,6 +12,8 @@ import {getAxisText} from "../util/GetAxisText";
 import {useSelectContext} from "../../../context/SelectContext";
 import {EventPropTypeInterface} from "victory-core";
 import {VictoryLineTTargetType} from "victory-line/lib/victory-line";
+import {Simulate} from "react-dom/test-utils";
+import ended = Simulate.ended;
 
 const fontFamily = "Fira Code"
 
@@ -19,13 +21,17 @@ type TeamsGraphProps = {
     /** Chart title */
     title: string,
     /** Team information with points to display */
-    teams: Team[]
+    teams: Team[],
+    /** Start time as a UTC timestamp */
+    start: string,
+    /** End time as a UTC timestamp */
+    end: string
 }
 
 /**
  * Show a graph of a list of teams, representing the points they have earned.
  */
-const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
+const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, start, end, title }) => {
 
     const { toggleTeam } = useSelectContext();
 
@@ -34,7 +40,10 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
             return null
         }
 
-        const data = getPoints(team.score.points)
+        const data = getPoints(
+            team.score.points,
+            start
+        )
 
         const events: EventPropTypeInterface<VictoryLineTTargetType, number | string>[] = [
             {
@@ -94,9 +103,17 @@ const TeamsGraph: React.FC<TeamsGraphProps> = ({ teams, title }) => {
         )
     })
 
+    const xDomain = [
+        new Date(start),
+        new Date(end)
+    ] as any
+
     return (
         <div style={{ height: "100vh", width: "100vw" }}>
             <VictoryChart
+                domain={{
+                    x: xDomain,
+                }}
                 padding={{
                     top: 30,
                     bottom: 60,

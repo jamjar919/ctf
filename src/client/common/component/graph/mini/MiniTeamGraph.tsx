@@ -9,19 +9,21 @@ const fontFamily = "Fira Code"
 
 type TeamsGraphProps = {
     /** Team information with points to display */
-    team: Team
+    team: Team,
+    /** Start time in UTC */
+    start: string
 }
 
 /**
  * Simpler team graph - smaller + with no axes.
  */
-const MiniTeamGraph: React.FC<TeamsGraphProps> = ({ team }) => {
+const MiniTeamGraph: React.FC<TeamsGraphProps> = ({ team, start }) => {
 
     if (!team?.score?.points) {
         return null;
     }
 
-    const data = getPoints(team.score.points)
+    const data = getPoints(team.score.points, start)
 
     return (
         <VictoryGroup

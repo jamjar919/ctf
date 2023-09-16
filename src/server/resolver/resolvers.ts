@@ -15,7 +15,7 @@ export const resolvers: Resolvers = {
         team: async (_, { id }): Promise<Team | null>  => getTeam(id)
     },
     Team: {
-        score: async (parent: Team): Promise<Score> => getTeamScore(parent.id, parent.competitionId)
+        score: async (parent: Team): Promise<Score> => getTeamScore(parent.id)
     },
     Competition: {
         teams: async (parent: Competition): Promise<Team[]> => {

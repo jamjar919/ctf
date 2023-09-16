@@ -1,7 +1,7 @@
 import {gql, useMutation} from "@apollo/client";
 import {TeamFragment} from "../fragment/TeamFragment";
 import {Team} from "../../../../graphql/generated/Resolver";
-import {FETCH_ALL_TEAMS_QUERY} from "../UseTeams";
+import {FETCH_COMPETITION_QUERY} from "../UseCompetition";
 import {FETCH_TEAM_QUERY} from "../UseTeam";
 
 const Query = gql`
@@ -15,7 +15,7 @@ const Query = gql`
 
 const useUpdateTeam = () => useMutation(Query, {
     refetchQueries: [
-        FETCH_ALL_TEAMS_QUERY,
+        FETCH_COMPETITION_QUERY,
         FETCH_TEAM_QUERY
     ],
     update: (cache, { data: { updateTeam } }) => {

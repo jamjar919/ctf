@@ -1,11 +1,11 @@
 import {gql, useMutation} from "@apollo/client";
-import {FETCH_ALL_TEAMS_QUERY} from "../UseTeams";
+import {FETCH_COMPETITION_QUERY} from "../UseCompetition";
 import {TeamFragment} from "../fragment/TeamFragment";
 
 const Query = gql`
     ${TeamFragment}
-    mutation CreateTeam($teamName: String!) {
-        addTeam(teamName: $teamName) {
+    mutation CreateTeam($teamName: String!, $competitionId: String!) {
+        addTeam(teamName: $teamName, competitionId: $competitionId) {
             ...TeamProperties
         }
     }
@@ -13,7 +13,7 @@ const Query = gql`
 
 const useCreateTeam = () => useMutation(Query, {
     refetchQueries: [
-        FETCH_ALL_TEAMS_QUERY,
+        FETCH_COMPETITION_QUERY,
     ],
 });
 

@@ -11,10 +11,10 @@ type Datum = {
  * Retrieve a set of points representing a team's score
  */
 const getPoints = (
-    points: Points[]
+    points: Points[],
+    start: string,
 ): Datum[] => {
-    const startTime = new Date();
-    startTime.setUTCHours(0, 0, 0)
+    const startTime = new Date(start);
 
     const startingPoint: Datum = {
         x: startTime,

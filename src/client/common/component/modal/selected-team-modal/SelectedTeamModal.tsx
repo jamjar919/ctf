@@ -10,6 +10,8 @@ import {AsciiLoaderTilesetType} from "../../ascii-loader/AsciiLoaderTileset";
 
 import styles from "./SelectedTeamModal.module.scss";
 import {SelectedTeamModalTitle} from "./SelectedTeamModalTitle";
+import {useCompetition} from "../../../query/UseCompetition";
+import {useCurrentCompetitionIdFromUrl} from "../../../hook/UseCurrentCompetitionIdFromUrl";
 
 type SelectedTeamModalProps = {
     id: string;
@@ -20,12 +22,16 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
 
     const { deselectTeam } = useSelectContext();
 
+    const competition = useCurrentCompetitionIdFromUrl();
+
     const { data, loading, error } = useTeam(id);
 
-    const content = (loading || error) ? <AsciiLoader type={AsciiLoaderTilesetType.Circle} />: (
+    const { data: compData, loading: compLoading, error: compError } = useCompetition(competition);
+    
+    const content = (loading || error || compLoading || compError) ? <AsciiLoader type={AsciiLoaderTilesetType.Circle} />: (
         <div className={styles.content}>
             <div className={styles.graph}>
-                <MiniTeamGraph team={data!.team} />
+                <MiniTeamGraph team={data!.team} start={compData!.competition.start} />
             </div>
             <PointsTable team={data!.team} />
         </div>

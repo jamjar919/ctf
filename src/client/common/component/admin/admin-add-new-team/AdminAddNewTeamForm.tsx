@@ -1,9 +1,12 @@
 import React from "react";
 import {Field, Form, Formik} from "formik";
 import {useCreateTeam} from "../../../query/mutation/UseCreateTeam";
+import {useCurrentCompetitionIdFromUrl} from "../../../hook/UseCurrentCompetitionIdFromUrl";
 
 const AdminAddNewTeamForm: React.FC = () => {
     const [mutateFunction] = useCreateTeam();
+
+    const competition = useCurrentCompetitionIdFromUrl();
 
     return (
         <Formik
@@ -13,7 +16,8 @@ const AdminAddNewTeamForm: React.FC = () => {
             onSubmit={({ teamName}, formikHelpers) => {
                 return mutateFunction({
                     variables: {
-                        teamName
+                        teamName,
+                        competitionId: competition
                     }
                 }).then(() => formikHelpers.resetForm())
             }}
@@ -21,7 +25,7 @@ const AdminAddNewTeamForm: React.FC = () => {
             <Form>
                 <Field name="teamName" disabled={formikProps.isSubmitting} />
                 <button type={"submit"} disabled={formikProps.isSubmitting}>
-                    Add team
+                    Add
                 </button>
             </Form>
         )}
