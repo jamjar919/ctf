@@ -1,6 +1,6 @@
 type MongoPoints = {
     _id: string;
-    team: string;
+    teamId: string;
     adjustment: number;
     reason: string;
     timestamp: string;

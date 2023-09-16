@@ -16,6 +16,14 @@ export type Scalars = {
   DateTime: any;
 };
 
+export type Competition = {
+  __typename?: 'Competition';
+  end: Scalars['DateTime'];
+  id: Scalars['ID'];
+  start: Scalars['DateTime'];
+  teams?: Maybe<Array<Team>>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addPoints?: Maybe<Team>;
@@ -35,6 +43,7 @@ export type MutationAddPointsArgs = {
 
 
 export type MutationAddTeamArgs = {
+  competitionId: Scalars['String'];
   teamName: Scalars['String'];
 };
 
@@ -60,14 +69,19 @@ export type Points = {
   adjustment: Scalars['Int'];
   id: Scalars['ID'];
   reason: Scalars['String'];
-  team: Scalars['ID'];
+  teamId: Scalars['ID'];
   timestamp: Scalars['DateTime'];
 };
 
 export type Query = {
   __typename?: 'Query';
+  competition: Competition;
   team?: Maybe<Team>;
-  teams: Array<Team>;
+};
+
+
+export type QueryCompetitionArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -78,12 +92,14 @@ export type QueryTeamArgs = {
 export type Score = {
   __typename?: 'Score';
   points: Array<Points>;
+  teamId: Scalars['ID'];
   total: Scalars['Int'];
 };
 
 export type Team = {
   __typename?: 'Team';
   color: Scalars['String'];
+  competitionId: Scalars['ID'];
   id: Scalars['ID'];
   name: Scalars['String'];
   score?: Maybe<Score>;
@@ -162,6 +178,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Competition: ResolverTypeWrapper<Competition>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -176,6 +193,7 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
+  Competition: Competition;
   DateTime: Scalars['DateTime'];
   ID: Scalars['ID'];
   Int: Scalars['Int'];
@@ -187,13 +205,21 @@ export type ResolversParentTypes = ResolversObject<{
   Team: Team;
 }>;
 
+export type CompetitionResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Competition'] = ResolversParentTypes['Competition']> = ResolversObject<{
+  end?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  start?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  teams?: Resolver<Maybe<Array<ResolversTypes['Team']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
   name: 'DateTime';
 }
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addPoints?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddPointsArgs, 'adjustment' | 'reason' | 'teamId'>>;
-  addTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddTeamArgs, 'teamName'>>;
+  addTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationAddTeamArgs, 'competitionId' | 'teamName'>>;
   deletePoints?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeletePointsArgs, 'id'>>;
   deleteTeam?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteTeamArgs, 'id'>>;
   updateTeam?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<MutationUpdateTeamArgs, 'id' | 'newColor' | 'newName'>>;
@@ -203,24 +229,26 @@ export type PointsResolvers<ContextType = Context, ParentType extends ResolversP
   adjustment?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   reason?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  team?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  teamId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   timestamp?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  competition?: Resolver<ResolversTypes['Competition'], ParentType, ContextType, RequireFields<QueryCompetitionArgs, 'id'>>;
   team?: Resolver<Maybe<ResolversTypes['Team']>, ParentType, ContextType, RequireFields<QueryTeamArgs, 'id'>>;
-  teams?: Resolver<Array<ResolversTypes['Team']>, ParentType, ContextType>;
 }>;
 
 export type ScoreResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Score'] = ResolversParentTypes['Score']> = ResolversObject<{
   points?: Resolver<Array<ResolversTypes['Points']>, ParentType, ContextType>;
+  teamId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type TeamResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Team'] = ResolversParentTypes['Team']> = ResolversObject<{
   color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  competitionId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   score?: Resolver<Maybe<ResolversTypes['Score']>, ParentType, ContextType>;
@@ -228,6 +256,7 @@ export type TeamResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
+  Competition?: CompetitionResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Points?: PointsResolvers<ContextType>;

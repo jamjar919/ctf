@@ -7,6 +7,7 @@ const mapDatabaseTeamToGraph = (mongoTeam: MongoTeam): Team => {
 
     return {
         id,
+        competitionId: mongoTeam.competitionId,
         name: mongoTeam.name,
         color: mongoTeam.color ?? colorFromString(id)
     };

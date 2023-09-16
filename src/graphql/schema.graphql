@@ -2,31 +2,40 @@ scalar DateTime
 
 type Team {
     id: ID!
+    competitionId: ID!
     name: String!
     color: String!
     score: Score
 }
 
 type Score {
+    teamId: ID!
     points: [Points!]!
     total: Int!
 }
 
 type Points {
     id: ID!
-    team: ID!
+    teamId: ID!
     adjustment: Int!
     reason: String!
     timestamp: DateTime!
 }
 
+type Competition {
+    id: ID!
+    start: DateTime!
+    end: DateTime!
+    teams: [Team!]
+}
+
 type Query {
-    teams: [Team!]!
+    competition(id: ID!): Competition!
     team(id: ID!): Team
 }
 
 type Mutation {
-    addTeam(teamName: String!): Team,
+    addTeam(teamName: String!, competitionId: String!): Team,
     updateTeam(id: ID!, newName: String!, newColor: String!): Team,
     deleteTeam(id: ID!): Boolean,
     addPoints(
