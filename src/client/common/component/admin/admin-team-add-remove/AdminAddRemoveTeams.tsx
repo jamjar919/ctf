@@ -23,7 +23,7 @@ const AdminAddRemoveTeams: React.FC = () => {
         return (
             <div>
                 <div>Current competition: <strong>{id}</strong></div>
-                <div>Time: {new Date(start).toLocaleString()} => {new Date(end).toLocaleString()}</div>
+                <div>Time: {new Date(start).toLocaleString()} {'=>'} {new Date(end).toLocaleString()}</div>
                 <h2>Add a team 🚧</h2>
                 <table className={styles.table}>
                     <tbody>

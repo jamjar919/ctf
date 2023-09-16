@@ -12,8 +12,6 @@ import {getAxisText} from "../util/GetAxisText";
 import {useSelectContext} from "../../../context/SelectContext";
 import {EventPropTypeInterface} from "victory-core";
 import {VictoryLineTTargetType} from "victory-line/lib/victory-line";
-import {Simulate} from "react-dom/test-utils";
-import ended = Simulate.ended;
 
 const fontFamily = "Fira Code"
 

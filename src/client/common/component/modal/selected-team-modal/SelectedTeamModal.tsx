@@ -27,7 +27,7 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
     const { data, loading, error } = useTeam(id);
 
     const { data: compData, loading: compLoading, error: compError } = useCompetition(competition);
-    
+
     const content = (loading || error || compLoading || compError) ? <AsciiLoader type={AsciiLoaderTilesetType.Circle} />: (
         <div className={styles.content}>
             <div className={styles.graph}>

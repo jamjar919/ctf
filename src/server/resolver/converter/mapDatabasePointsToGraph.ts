@@ -4,7 +4,6 @@ import {MongoPoints} from "../../database/type/MongoPoints";
 const mapDatabasePointsToGraph = (mongoPoints: MongoPoints): Points => {
     return {
         id: mongoPoints._id.toString(),
-        competitionId: mongoPoints.competitionId,
         teamId: mongoPoints.teamId,
         adjustment: mongoPoints.adjustment,
         reason: mongoPoints.reason,
