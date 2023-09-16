@@ -1,11 +1,14 @@
 import React from "react";
+import {Competitions} from "../common/Competitions";
 
 const IndexPage: React.FC = () => {
     return (
         <div>
             <h1>://Competitions</h1>
             <ul>
-                <li><a href={"/test"}>test</a></li>
+                {Competitions.map(name => (
+                    <li><a href={`/${name}`}>{name}</a></li>
+                ))}
             </ul>
         </div>
     )

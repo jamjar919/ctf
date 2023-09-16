@@ -5,21 +5,20 @@ import {useCompetition} from "../common/query/UseCompetition";
 import {FullscreenLoader} from "../common/component/fullscreen-loader/FullscreenLoader";
 import {AdminHotCorner} from "../common/component/admin/admin-hot-corner/AdminHotCorner";
 import {GetStaticPaths} from "next";
+import {Competitions} from "../common/Competitions";
 
+// Prerender paths for the competitions we're aware of
 export const getStaticPaths = (async () => {
     return {
-        paths: [
-            {
-                params: {
-                    competition: "test"
-                },
+        paths: Competitions.map(name =>({
+            params: {
+                competition: name
             },
-        ],
+        })),
         fallback: true,
     }
 }) satisfies GetStaticPaths
 
-// This also gets called at build time
 export async function getStaticProps({ params }: { params: Record<string, string> }) {
     const competition = params.competition ?? "";
 
