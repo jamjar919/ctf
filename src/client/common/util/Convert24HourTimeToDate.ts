@@ -1,15 +1,15 @@
-const convert24HourTimeToDate = (time: string): Date => {
+const convert24HourTimeToDate = (time: string, baseDate?: Date): Date => {
     const [hours, minutes] = time.split(':').map(Number);
 
-    // Get the current date
-    const currentDate = new Date();
+    // Use the base date provided as the date part - else use the current date
+    const date = baseDate ?? new Date();
 
     // Set the hours and minutes of the current date
-    currentDate.setHours(hours);
-    currentDate.setMinutes(minutes);
-    currentDate.setMilliseconds(0)
+    date.setHours(hours);
+    date.setMinutes(minutes);
+    date.setMilliseconds(0)
 
-    return currentDate;
+    return date;
 }
 
 export { convert24HourTimeToDate }

@@ -33,7 +33,7 @@ const SelectedTeamModal: React.FC<SelectedTeamModalProps> = (props) => {
             <div className={styles.graph}>
                 <MiniTeamGraph team={data!.team} start={compData!.competition.start} />
             </div>
-            <PointsTable team={data!.team} />
+            <PointsTable team={data!.team} startDateTime={compData!.competition.start} />
         </div>
     );
 

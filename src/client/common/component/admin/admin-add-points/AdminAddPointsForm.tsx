@@ -9,7 +9,8 @@ import {getCurrent24HourTime} from "../../../util/GetCurrent24HourTime";
 import {convert24HourTimeToDate} from "../../../util/Convert24HourTimeToDate";
 
 type AdminAddPointsProps = {
-    team: Team
+    team: Team,
+    startDateTime: string,
 }
 
 const AdminAddPointsSchema = Yup.object().shape({
@@ -23,7 +24,7 @@ const AdminAddPointsSchema = Yup.object().shape({
         .matches(/^([01]\d|2[0-3]):[0-5]\d$/, 'dd:dd'),
 });
 
-const AdminAddPointsForm: React.FC<AdminAddPointsProps> = ({ team }) => {
+const AdminAddPointsForm: React.FC<AdminAddPointsProps> = ({ team, startDateTime }) => {
     const [mutateFunction] = useAddPoints();
 
     return (
@@ -40,7 +41,7 @@ const AdminAddPointsForm: React.FC<AdminAddPointsProps> = ({ team }) => {
                         teamId: team.id,
                         adjustment: Number(adjustment),
                         reason,
-                        timestamp: convert24HourTimeToDate(timestamp).toISOString()
+                        timestamp: convert24HourTimeToDate(timestamp, new Date(startDateTime)).toISOString()
                     }
                 }).then(() => formikHelpers.resetForm())
             }}

@@ -8,7 +8,8 @@ import {AdminDeletePointsButton} from "../admin/admin-delete-points/AdminDeleteP
 import styles from "./PointsTable.module.scss";
 
 type PointsTableProps = {
-    team: Team
+    team: Team,
+    startDateTime: string,
 }
 
 const getIndicator = (adjustment: number): string => {
@@ -19,7 +20,7 @@ const getIndicator = (adjustment: number): string => {
     return adjustment > 0 ? "↑" : "↓";
 }
 
-const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
+const PointsTable: React.FC<PointsTableProps> = ({ team, startDateTime }) => {
 
     const { enableAdminTools } = useAdminContext();
 
@@ -65,7 +66,7 @@ const PointsTable: React.FC<PointsTableProps> = ({ team }) => {
                     {rows}
                 </tbody>
             </table>
-            {enableAdminTools && <AdminAddPointsForm key={"add-points"} team={team} />}
+            {enableAdminTools && <AdminAddPointsForm key={"add-points"} team={team} startDateTime={startDateTime} />}
         </>
     )
 }
