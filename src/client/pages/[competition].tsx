@@ -17,7 +17,7 @@ export const getStaticPaths = (async () => {
                 competition: name
             },
         })),
-        fallback: true,
+        fallback: false,
     }
 }) satisfies GetStaticPaths
 
