@@ -4,10 +4,12 @@ import {Legend} from "../common/component/team-list/Legend";
 import {useCompetition} from "../common/query/UseCompetition";
 import {FullscreenLoader} from "../common/component/fullscreen-loader/FullscreenLoader";
 import {AdminHotCorner} from "../common/component/admin/admin-hot-corner/AdminHotCorner";
-import {GetStaticPaths} from "next";
+import {GetStaticPaths, GetStaticPropsContext, GetStaticPropsResult} from "next";
 import {Competitions} from "../common/Competitions";
+import {PageContext} from "../common/context/PageContext";
 
-// Prerender paths for the competitions we're aware of
+// Paths to prerender. This should be one per competition from the list we have set up.
+// TODO this should call the GQL server.
 export const getStaticPaths = (async () => {
     return {
         paths: Competitions.map(name =>({
@@ -19,18 +21,34 @@ export const getStaticPaths = (async () => {
     }
 }) satisfies GetStaticPaths
 
-export async function getStaticProps({ params }: { params: Record<string, string> }) {
-    const competition = params.competition ?? "";
+export async function getStaticProps(
+    context: GetStaticPropsContext
+): Promise<GetStaticPropsResult<CompetitionPageStaticProps>> {
+    const competition = String(context.params?.competition) ?? "";
 
-    // Pass post data to the page via props
-    return { props: { competition } }
+    const graphQlHost = process.env.GRAPH_QL_HOST
+
+    if (!graphQlHost) {
+        throw new Error("No graphQl server configured, this should be set as an environment variable")
+    }
+
+    return {
+        props: {
+            competition,
+            graphQlHost
+        }
+    }
+}
+
+type CompetitionPageStaticProps = CompetitionPageProps & {
+    graphQlHost: string;
 }
 
 type CompetitionPageProps = {
     competition: string;
 }
 
-const CompetitionPage: React.FC<CompetitionPageProps> = ({ competition }) =>  {
+const CompetitionPageComponent: React.FC<CompetitionPageProps> = ({ competition }) =>  {
 
     const { data, loading, error } = useCompetition(competition!);
 
@@ -61,6 +79,14 @@ const CompetitionPage: React.FC<CompetitionPageProps> = ({ competition }) =>  {
             <Legend teams={teams} />
             <AdminHotCorner />
         </div>
+    )
+}
+
+const CompetitionPage: React.FC<CompetitionPageStaticProps> = ({ competition, graphQlHost }) => {
+    return (
+        <PageContext graphQlHost={graphQlHost}>
+            <CompetitionPageComponent competition={competition} />
+        </PageContext>
     )
 }
 

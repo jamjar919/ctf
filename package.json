@@ -9,9 +9,7 @@
   "scripts": {
     "build:server": "npx webpack --config webpack.server.config.js",
     "start:server": "node ./dist/server.js",
-    "build:client": "npm-run-all next:build:client next:export:client",
-    "next:build:client": "next build ./src/client",
-    "next:export:client": "next export ./src/client",
+    "build:client": "next build ./src/client",
     "build:client:dev": "next dev ./src/client",
     "build:server:dev": "npx webpack -w --config webpack.server.config.js --mode=development",
     "test": "jest",

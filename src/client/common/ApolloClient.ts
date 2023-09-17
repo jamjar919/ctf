@@ -1,12 +1,12 @@
 import { ApolloClient, InMemoryCache } from "@apollo/client";
 import {getAdminCookie} from "./component/admin/AdminCookie";
 
-const client = new ApolloClient({
-    uri: "http://localhost:16000/graphql",
+const getApolloClient = (uri: string) => new ApolloClient({
+    uri,
     cache: new InMemoryCache(),
     headers: {
         token: getAdminCookie() ?? ""
     }
 });
 
-export default client;
+export { getApolloClient };

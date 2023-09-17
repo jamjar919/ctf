@@ -7,7 +7,7 @@ const IndexPage: React.FC = () => {
             <h1>://Competitions</h1>
             <ul>
                 {Competitions.map(name => (
-                    <li><a href={`/${name}`}>{name}</a></li>
+                    <li key={name}><a href={`/${name}`}>{name}</a></li>
                 ))}
             </ul>
         </div>
