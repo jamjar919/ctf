@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from "react";
+import React, {PropsWithChildren, useMemo} from "react";
 import {getApolloClient} from "../ApolloClient";
 import {ApolloProvider} from "@apollo/client";
 import {ModalManager} from "../component/modal/manager/ModalManager";
@@ -13,8 +13,13 @@ const PageContext: React.FC<PageContextProps> = ({
     children,
     graphQlHost
 }) => {
+    const client = useMemo(
+        () => getApolloClient(graphQlHost),
+        [graphQlHost]
+    )
+
     return (
-        <ApolloProvider client={getApolloClient(graphQlHost)}>
+        <ApolloProvider client={client}>
             <SelectContextProvider>
                 <AdminContextProvider>
                     {children}
